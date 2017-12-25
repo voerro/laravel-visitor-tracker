@@ -3,6 +3,7 @@
 namespace Voerro\VisitStats\Middleware;
 
 use Closure;
+use Voerro\VisitStats\Tracker;
 
 class RecordVisits
 {
@@ -15,7 +16,7 @@ class RecordVisits
      */
     public function handle($request, Closure $next)
     {
-        echo 'Middleware: RecordVisits';
+        Tracker::recordVisit();
 
         return $next($request);
     }
