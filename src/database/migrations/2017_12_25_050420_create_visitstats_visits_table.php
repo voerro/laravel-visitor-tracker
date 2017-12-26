@@ -22,6 +22,7 @@ class CreateVisitStatsVisitsTable extends Migration
             $table->string('url')->nullable();
 
             $table->string('user_agent')->nullable();
+            $table->boolean('is_mobile')->default(false);
             $table->string('os')->nullable();
             $table->string('browser')->nullable();
 
