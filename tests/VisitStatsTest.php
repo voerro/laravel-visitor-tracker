@@ -35,4 +35,19 @@ class VisitStatsTest extends TestCase
 
         $this->assertFalse($result);
     }
+
+    public function testDetermineIfTheVisitorIsBot()
+    {
+        $bot = Tracker::getBot('Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)');
+
+        $this->assertEquals('Googlebot', $bot);
+
+        $bot = Tracker::getBot('Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; Google Web Preview Analytics) Chrome/41.0.2272.118 Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)');
+
+        $this->assertEquals('Googlebot', $bot);
+
+        $bot = Tracker::getBot('Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:58.0) Gecko/20100101 Firefox/58.0');
+
+        $this->assertEquals(false, $bot);
+    }
 }
