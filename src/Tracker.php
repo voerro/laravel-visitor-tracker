@@ -3,15 +3,23 @@
 namespace Voerro\VisitStats;
 
 use Voerro\VisitStats\Model\Visit;
+use DeviceDetector\DeviceDetector;
 
 class Tracker
 {
-    public static function recordVisit()
+    public static function recordVisit($agent = null)
     {
-        $agent = request()->userAgent();
-        $bot = self::getBot($agent);
+        $agent = $agent ?: request()->userAgent();
 
-        Visit::create([
+        $dd = new DeviceDetector($agent);
+        $dd->parse();
+
+        $bot = null;
+        if ($dd->isBot()) {
+            $bot = $dd->getBot();
+        }
+
+        return Visit::create([
             'user_id' => auth()->check() ? auth()->id() : null,
             'ip' => request()->ip(),
             'method' => request()->method(),
@@ -19,27 +27,11 @@ class Tracker
             'is_ajax' => request()->ajax(),
 
             'user_agent' => $agent,
-            'is_mobile' => self::isMobile($agent),
-            'is_bot' => !!$bot,
-            'bot' => $bot ?: null,
+            'is_mobile' => $dd->isMobile(),
+            'is_bot' => $dd->isBot(),
+            'bot' => $bot ? $bot['name'] : null,
 
             'browser_language' => request()->server('HTTP_ACCEPT_LANGUAGE'),
         ]);
-    }
-
-    public static function isMobile($agent)
-    {
-        return stripos($agent, 'Mobile') !== false;
-    }
-
-    public static function getBot($agent)
-    {
-        if (stripos($agent, 'Googlebot')) {
-            return 'Googlebot';
-        } elseif (false) {
-            return '';
-        }
-
-        return false;
     }
 }

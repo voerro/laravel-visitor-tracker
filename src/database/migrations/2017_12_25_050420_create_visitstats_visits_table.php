@@ -24,7 +24,7 @@ class CreateVisitStatsVisitsTable extends Migration
             $table->string('user_agent')->nullable();
             $table->boolean('is_mobile')->default(false);
             $table->boolean('is_bot')->default(false);
-            $table->boolean('bot')->default(false);
+            $table->string('bot')->nullable();
             $table->string('os')->nullable();
             $table->string('browser')->nullable();
 
