@@ -10,11 +10,37 @@ class Tracker
 {
     public static function recordVisit($agent = null)
     {
-        $agent = $agent ?: request()->userAgent();
+        // Check if the user should be tracked
+        if (auth()->check()) {
+            foreach (config('visitortracker.dont_track_users') as $fields) {
+                $conditionsMet = 0;
+                foreach ($fields as $field => $value) {
+                    if (auth()->user()->{$field} == $value) {
+                        $conditionsMet++;
+                    }
+                }
 
-        $data = self::getVisitData($agent);
+                if ($conditionsMet == count($fields)) {
+                    return;
+                }
+            }
+        }
 
-        // dd(config('visitrotracker.dont_track')[0]['ip']);
+        $data = self::getVisitData($agent ?: request()->userAgent());
+
+        // Check if the request should be recorded
+        foreach (config('visitortracker.dont_record') as $fields) {
+            $conditionsMet = 0;
+            foreach ($fields as $field => $value) {
+                if ($data[$field] == $value) {
+                    $conditionsMet++;
+                }
+            }
+
+            if ($conditionsMet == count($fields)) {
+                return;
+            }
+        }
 
         return Visit::create($data);
     }

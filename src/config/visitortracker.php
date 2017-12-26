@@ -3,7 +3,7 @@
 return [
     /*
     |--------------------------------------------------------------------------
-    | Don't track requests with the following field values
+    | Don't record requests with the following field values
     |--------------------------------------------------------------------------
     |
     | The available fields are:
@@ -29,16 +29,35 @@ return [
     |
     */
 
-    'dont_track' => [
+    'dont_record' => [
         // Example 1:
         // ['ip' => '127.0.0.1'],
         //
-        // Example 2:
+        // Example 2 (all the listed fields fields have to have the specified values):
         // [
-        //     'method' => 'POST',
+        //     'method' => 'GET',
         //     'is_ajax' => true,
-        //      ...
         // ]
-        ['ip' => '127.0.0.1'],
+        //
+        // Example 3 (at least one of the fields have to have the specified value):
+        // ['method' => 'POST'],
+        // ['is_ajax' => true],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Don't track requests from users with the following field values
+    |--------------------------------------------------------------------------
+    |
+    | Specify any fields your users model has
+    |
+    */
+
+    'dont_track_users' => [
+        // Examples:
+        // ['id' => 1],
+        // ['email' => 'admin@example.com'],
+        // ['is_admin' => true],
+        // ['role_id' => 1]
     ],
 ];
