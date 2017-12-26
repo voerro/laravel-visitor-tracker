@@ -1,10 +1,10 @@
 <?php
 
-namespace Voerro\VisitStats;
+namespace Voerro\Laravel\VisitorTracker;
 
-use Voerro\VisitStats\Model\Visit;
 use DeviceDetector\DeviceDetector;
 use DeviceDetector\Parser\OperatingSystem;
+use Voerro\Laravel\VisitorTracker\Model\Visit;
 
 class Tracker
 {
@@ -12,6 +12,15 @@ class Tracker
     {
         $agent = $agent ?: request()->userAgent();
 
+        $data = self::getVisitData($agent);
+
+        // dd(config('visitrotracker.dont_track')[0]['ip']);
+
+        return Visit::create($data);
+    }
+
+    protected static function getVisitData($agent)
+    {
         $dd = new DeviceDetector($agent);
         $dd->parse();
 
@@ -28,7 +37,7 @@ class Tracker
             ? $dd->getClient('name') . ' ' . $dd->getClient('version')
             : $dd->getClient('name');
 
-        return Visit::create([
+        return [
             'user_id' => auth()->check() ? auth()->id() : null,
             'ip' => request()->ip(),
             'method' => request()->method(),
@@ -45,6 +54,6 @@ class Tracker
             'browser' => $browser,
 
             'browser_language' => request()->server('HTTP_ACCEPT_LANGUAGE'),
-        ]);
+        ];
     }
 }

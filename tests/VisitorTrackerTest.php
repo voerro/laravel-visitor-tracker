@@ -1,12 +1,12 @@
 <?php
 
-namespace Voerro\VisitStats\Test;
+namespace Voerro\Laravel\VisitorTracker\Test;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Voerro\VisitStats\Facades\Tracker;
-use Voerro\VisitStats\Model\Visit;
+use Voerro\Laravel\VisitorTracker\Tracker;
+use Voerro\Laravel\VisitorTracker\Model\Visit;
 
-class VisitStatsTest extends TestCase
+class VisitorTrackerTest extends TestCase
 {
     use RefreshDatabase;
 

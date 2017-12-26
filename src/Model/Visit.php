@@ -1,12 +1,12 @@
 <?php
 
-namespace Voerro\VisitStats\Model;
+namespace Voerro\Laravel\VisitorTracker\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Visit extends Model
 {
-    protected $table = 'visitstats_visits';
+    protected $table = 'visitortracker_visits';
 
     protected $guarded = [];
 

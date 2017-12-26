@@ -1,6 +1,6 @@
 <?php
 
-namespace Voerro\VisitStats\Facades;
+namespace Voerro\Laravel\VisitorTracker\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
@@ -8,6 +8,6 @@ class Tracker extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'laravel-visit-stats';
+        return 'laravel-visitor-tracker';
     }
 }

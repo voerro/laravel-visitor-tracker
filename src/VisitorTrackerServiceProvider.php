@@ -1,10 +1,10 @@
 <?php
 
-namespace Voerro\VisitStats;
+namespace Voerro\Laravel\VisitorTracker;
 
 use Illuminate\Support\ServiceProvider;
 
-class VisitStatsServiceProvider extends ServiceProvider
+class VisitorTrackerServiceProvider extends ServiceProvider
 {
     /**
      * Register the application services.
@@ -17,7 +17,11 @@ class VisitStatsServiceProvider extends ServiceProvider
             return new Tracker();
         });
 
-        $this->app->alias(Tracker::class, 'laravel-visit-stats');
+        $this->app->alias(Tracker::class, 'laravel-visitor-tracker');
+
+        if ($this->app->config->get('visitortracker') === null) {
+            $this->app->config->set('visitortracker', require __DIR__ . '/config/visitortracker.php');
+        }
     }
 
     /**
@@ -28,5 +32,9 @@ class VisitStatsServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
+
+        $this->publishes([
+            __DIR__ . '/config/visitortracker.php' => config_path('visitortracker.php'),
+        ]);
     }
 }

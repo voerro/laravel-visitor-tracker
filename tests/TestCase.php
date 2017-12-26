@@ -1,9 +1,9 @@
 <?php
 
-namespace Voerro\VisitStats\Test;
+namespace Voerro\Laravel\VisitorTracker\Test;
 
-use Voerro\VisitStats\VisitStats\Facades\Tracker;
-use Voerro\VisitStats\VisitStatsServiceProvider;
+use Voerro\Laravel\VisitorTracker\VisitorTrackerServiceProvider;
+use Voerro\Laravel\VisitorTracker\Tracker;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
 class TestCase extends OrchestraTestCase
@@ -11,11 +11,11 @@ class TestCase extends OrchestraTestCase
     /**
      * Load package service provider
      * @param  \Illuminate\Foundation\Application $app
-     * @return Voerro\VisitStats\VisitStatsServiceProvider
+     * @return Voerro\Laravel\VisitorTracker\VisitorTrackerServiceProvider
      */
     protected function getPackageProviders($app)
     {
-        return [VisitStatsServiceProvider::class];
+        return [VisitorTrackerServiceProvider::class];
     }
 
     /**
@@ -26,7 +26,7 @@ class TestCase extends OrchestraTestCase
     protected function getPackageAliases($app)
     {
         return [
-            'VisitStats' => Tracker::class,
+            'VisitorTracker' => Tracker::class,
         ];
     }
 }
