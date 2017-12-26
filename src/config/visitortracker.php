@@ -60,4 +60,19 @@ return [
         // ['is_admin' => true],
         // ['role_id' => 1]
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Recording login attempts
+    |--------------------------------------------------------------------------
+    |
+    | Describe what a login attempt would look like
+    |
+    */
+
+    'login_attempt' => [
+        'url' => '/login',
+        'method' => 'POST',
+        'is_ajax' => false,
+    ],
 ];

@@ -42,6 +42,13 @@ class Tracker
             }
         }
 
+        // Determine if the request is a login attempt
+        if ('/' . request()->route()->uri == config('visitortracker.login_attempt.url')
+        && $data['method'] == config('visitortracker.login_attempt.method')
+        && $data['is_ajax'] == config('visitortracker.login_attempt.is_ajax')) {
+            $data['is_login_attempt'] = true;
+        }
+
         return Visit::create($data);
     }
 
