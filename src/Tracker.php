@@ -4,6 +4,7 @@ namespace Voerro\VisitStats;
 
 use Voerro\VisitStats\Model\Visit;
 use DeviceDetector\DeviceDetector;
+use DeviceDetector\Parser\OperatingSystem;
 
 class Tracker
 {
@@ -19,6 +20,14 @@ class Tracker
             $bot = $dd->getBot();
         }
 
+        $os = $dd->getOs('version')
+            ? $dd->getOs('name') . ' ' . $dd->getOs('version')
+            : $dd->getOs('name');
+
+        $browser = $dd->getClient('version')
+            ? $dd->getClient('name') . ' ' . $dd->getClient('version')
+            : $dd->getClient('name');
+
         return Visit::create([
             'user_id' => auth()->check() ? auth()->id() : null,
             'ip' => request()->ip(),
@@ -30,6 +39,10 @@ class Tracker
             'is_mobile' => $dd->isMobile(),
             'is_bot' => $dd->isBot(),
             'bot' => $bot ? $bot['name'] : null,
+            'os' => $os,
+            'os_family' => OperatingSystem::getOsFamily($dd->getOs('short_name')),
+            'browser_family' => $dd->getClient('name'),
+            'browser' => $browser,
 
             'browser_language' => request()->server('HTTP_ACCEPT_LANGUAGE'),
         ]);
