@@ -20,8 +20,8 @@ return [
     | - browser_family
     | - browser
     | - is_login_attempt
-    | - continent
-    | - continent_code
+    | - lat
+    | - long
     | - country
     | - country_code
     | - city
@@ -84,7 +84,12 @@ return [
     |
     | Should the geoip data be collected?
     |
+    | Set the geoip driver.
+    | Supported: 'userinfo.io', 'freegeoip.net'
+    |
     */
 
     'geoip_on' => true,
+
+    'geoip_driver' => 'freegeoip.net'
 ];

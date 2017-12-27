@@ -5,13 +5,59 @@ namespace Voerro\Laravel\VisitorTracker;
 use DeviceDetector\DeviceDetector;
 use DeviceDetector\Parser\OperatingSystem;
 use Voerro\Laravel\VisitorTracker\Model\Visit;
-use GuzzleHttp\Client;
 
 class Tracker
 {
     public static function recordVisit($agent = null)
     {
-        // Check if the user should be tracked
+        if (!self::shouldTrackAuthenticatedUser()) {
+            return;
+        }
+
+        $data = self::getVisitData($agent ?: request()->userAgent());
+
+        // Determine if the request is a login attempt
+        if (request()->route()
+        && '/' . request()->route()->uri == config('visitortracker.login_attempt.url')
+        && $data['method'] == config('visitortracker.login_attempt.method')
+        && $data['is_ajax'] == config('visitortracker.login_attempt.is_ajax')) {
+            $data['is_login_attempt'] = true;
+        }
+
+        if (!self::shouldRecordRequest($data)) {
+            return;
+        }
+
+        $visit = Visit::create($data);
+
+        // Collect the geoip data if needed
+        if (config('visitortracker.geoip_on')) {
+            $geoip = new Geoip(config('visitortracker.geoip_driver'));
+
+            if ($geoip->driver) {
+                $visit->ip = '112.205.241.105'; // DEBUG
+                if ($geoip = $geoip->driver->getDataFor($visit)) {
+                    $visit->update([
+                        'lat' => $geoip->latitude(),
+                        'long' => $geoip->longitude(),
+                        'country' => $geoip->country(),
+                        'country_code' => $geoip->countryCode(),
+                        'city' => $geoip->city(),
+                    ]);
+                }
+            }
+        }
+
+        return $visit;
+    }
+
+    /**
+     * Determine if the authenticated user should be tracked
+     *
+     * @return boolean
+     */
+    protected static function shouldTrackAuthenticatedUser()
+    {
         if (auth()->check()) {
             foreach (config('visitortracker.dont_track_users') as $fields) {
                 $conditionsMet = 0;
@@ -22,14 +68,21 @@ class Tracker
                 }
 
                 if ($conditionsMet == count($fields)) {
-                    return;
+                    return false;
                 }
             }
         }
 
-        $data = self::getVisitData($agent ?: request()->userAgent());
+        return true;
+    }
 
-        // Check if the request should be recorded
+    /**
+     * Determine if the request/visit should be recorded
+     *
+     * @return boolean
+     */
+    protected static function shouldRecordRequest($data)
+    {
         foreach (config('visitortracker.dont_record') as $fields) {
             $conditionsMet = 0;
             foreach ($fields as $field => $value) {
@@ -39,38 +92,11 @@ class Tracker
             }
 
             if ($conditionsMet == count($fields)) {
-                return;
+                return false;
             }
         }
 
-        // Determine if the request is a login attempt
-        if (request()->route()
-        && '/' . request()->route()->uri == config('visitortracker.login_attempt.url')
-        && $data['method'] == config('visitortracker.login_attempt.method')
-        && $data['is_ajax'] == config('visitortracker.login_attempt.is_ajax')) {
-            $data['is_login_attempt'] = true;
-        }
-
-        $visit = Visit::create($data);
-
-        // Collect the geoip data if needed
-        if (config('visitortracker.geoip_on')) {
-            $client = new Client();
-
-            $response = $client->get('https://api.userinfo.io/userinfos?ip_address=' . $data['ip']);
-
-            $json = json_decode($response->getBody()->getContents());
-
-            $visit->update([
-                'lat' => $json->position->latitude ?: null,
-                'long' => $json->position->longitude ?: null,
-                'country' => $json->country->name ?: null,
-                'country_code' => $json->country->code ?: null,
-                'city' => $json->city->name ?: null,
-            ]);
-        }
-
-        return $visit;
+        return true;
     }
 
     protected static function getVisitData($agent)

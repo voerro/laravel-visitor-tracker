@@ -30,7 +30,7 @@ class CreateVisitorTrackerVisitsTable extends Migration
             $table->string('browser_family')->nullable();
             $table->string('browser')->nullable();
 
-            $table->boolean('is_login_attempt')->nullable();
+            $table->boolean('is_login_attempt')->default(false);
 
             $table->string('country')->nullable();
             $table->string('country_code')->nullable();
