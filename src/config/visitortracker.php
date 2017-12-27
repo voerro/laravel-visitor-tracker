@@ -25,6 +25,7 @@ return [
     | - country
     | - country_code
     | - city
+    | - browser_language_family
     | - browser_language
     |
     */

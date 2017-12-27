@@ -38,7 +38,8 @@ class CreateVisitorTrackerVisitsTable extends Migration
             $table->string('country_code')->nullable();
             $table->string('city')->nullable();
 
-            $table->string('browser_language', 20)->nullable();
+            $table->string('browser_language_family', 4)->nullable();
+            $table->string('browser_language', 7)->nullable();
             $table->timestamps();
         });
     }

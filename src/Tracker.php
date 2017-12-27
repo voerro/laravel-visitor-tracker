@@ -70,6 +70,12 @@ class Tracker
             ? $dd->getClient('name') . ' ' . $dd->getClient('version')
             : $dd->getClient('name');
 
+        // Browser language
+        preg_match_all('/([a-z]{2})-[A-Z]{2}/', request()->server('HTTP_ACCEPT_LANGUAGE'), $matches);
+
+        $lang = count($matches) ? $matches[0][0] : '';
+        $langFamily = count($matches) ? $matches[1][0] : '';
+
         return [
             'user_id' => auth()->check() ? auth()->id() : null,
             'ip' => request()->ip(),
@@ -86,7 +92,8 @@ class Tracker
             'browser_family' => $dd->getClient('name'),
             'browser' => $browser,
 
-            'browser_language' => request()->server('HTTP_ACCEPT_LANGUAGE'),
+            'browser_language_family' => $langFamily,
+            'browser_language' => $lang,
         ];
     }
 }
