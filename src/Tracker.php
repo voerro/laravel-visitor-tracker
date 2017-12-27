@@ -5,6 +5,7 @@ namespace Voerro\Laravel\VisitorTracker;
 use DeviceDetector\DeviceDetector;
 use DeviceDetector\Parser\OperatingSystem;
 use Voerro\Laravel\VisitorTracker\Model\Visit;
+use Voerro\Laravel\VisitorTracker\Jobs\GetGeoipData;
 
 class Tracker
 {
@@ -30,23 +31,7 @@ class Tracker
 
         $visit = Visit::create($data);
 
-        // Collect the geoip data if needed
-        if (config('visitortracker.geoip_on')) {
-            $geoip = new Geoip(config('visitortracker.geoip_driver'));
-
-            if ($geoip->driver) {
-                $visit->ip = '112.205.241.105'; // DEBUG
-                if ($geoip = $geoip->driver->getDataFor($visit)) {
-                    $visit->update([
-                        'lat' => $geoip->latitude(),
-                        'long' => $geoip->longitude(),
-                        'country' => $geoip->country(),
-                        'country_code' => $geoip->countryCode(),
-                        'city' => $geoip->city(),
-                    ]);
-                }
-            }
-        }
+        GetGeoipData::dispatch($visit);
 
         return $visit;
     }
