@@ -15,7 +15,8 @@
         "illuminate/support": "5.5.*",
         "illuminate/http": "5.5.*",
         "illuminate/database": "5.5.*",
-        "piwik/device-detector": "^3.9"
+        "piwik/device-detector": "^3.9",
+        "guzzlehttp/guzzle": "~6.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.5",

@@ -32,11 +32,11 @@ class CreateVisitorTrackerVisitsTable extends Migration
 
             $table->boolean('is_login_attempt')->nullable();
 
-            $table->string('continent')->nullable();
-            $table->string('continent_code')->nullable();
             $table->string('country')->nullable();
             $table->string('country_code')->nullable();
             $table->string('city')->nullable();
+            $table->double('lat')->nullable();
+            $table->double('long')->nullable();
 
             $table->string('browser_language_family', 4)->nullable();
             $table->string('browser_language', 7)->nullable();

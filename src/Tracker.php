@@ -5,6 +5,7 @@ namespace Voerro\Laravel\VisitorTracker;
 use DeviceDetector\DeviceDetector;
 use DeviceDetector\Parser\OperatingSystem;
 use Voerro\Laravel\VisitorTracker\Model\Visit;
+use GuzzleHttp\Client;
 
 class Tracker
 {
@@ -43,13 +44,33 @@ class Tracker
         }
 
         // Determine if the request is a login attempt
-        if ('/' . request()->route()->uri == config('visitortracker.login_attempt.url')
+        if (request()->route()
+        && '/' . request()->route()->uri == config('visitortracker.login_attempt.url')
         && $data['method'] == config('visitortracker.login_attempt.method')
         && $data['is_ajax'] == config('visitortracker.login_attempt.is_ajax')) {
             $data['is_login_attempt'] = true;
         }
 
-        return Visit::create($data);
+        $visit = Visit::create($data);
+
+        // Collect the geoip data if needed
+        if (config('visitortracker.geoip_on')) {
+            $client = new Client();
+
+            $response = $client->get('https://api.userinfo.io/userinfos?ip_address=' . $data['ip']);
+
+            $json = json_decode($response->getBody()->getContents());
+
+            $visit->update([
+                'lat' => $json->position->latitude ?: null,
+                'long' => $json->position->longitude ?: null,
+                'country' => $json->country->name ?: null,
+                'country_code' => $json->country->code ?: null,
+                'city' => $json->city->name ?: null,
+            ]);
+        }
+
+        return $visit;
     }
 
     protected static function getVisitData($agent)
@@ -73,8 +94,8 @@ class Tracker
         // Browser language
         preg_match_all('/([a-z]{2})-[A-Z]{2}/', request()->server('HTTP_ACCEPT_LANGUAGE'), $matches);
 
-        $lang = count($matches) ? $matches[0][0] : '';
-        $langFamily = count($matches) ? $matches[1][0] : '';
+        $lang = count($matches) && count($matches[0]) ? $matches[0][0] : '';
+        $langFamily = count($matches) && count($matches[1]) ? $matches[1][0] : '';
 
         return [
             'user_id' => auth()->check() ? auth()->id() : null,
