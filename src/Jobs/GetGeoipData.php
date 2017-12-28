@@ -16,6 +16,8 @@ class GetGeoipData implements ShouldQueue
 
     protected $visit;
 
+    public $tries = 1;
+
     /**
      * Create a new job instance.
      *
@@ -38,15 +40,44 @@ class GetGeoipData implements ShouldQueue
 
             if ($geoip->driver) {
                 if ($geoip = $geoip->driver->getDataFor($this->visit)) {
-                    $this->visit->update([
+                    $data = [
                         'lat' => $geoip->latitude(),
                         'long' => $geoip->longitude(),
                         'country' => $geoip->country(),
                         'country_code' => $geoip->countryCode(),
                         'city' => $geoip->city(),
-                    ]);
+                    ];
+
+                    if ($this->shouldRecordVisit($data)) {
+                        $this->visit->update($data);
+                    } else {
+                        $this->visit->delete();
+                    }
                 }
             }
         }
+    }
+
+    /**
+     * Determine if the request/visit should be recorded
+     *
+     * @return boolean
+     */
+    protected static function shouldRecordVisit($data)
+    {
+        foreach (config('visitortracker.dont_record_geoip') as $fields) {
+            $conditionsMet = 0;
+            foreach ($fields as $field => $value) {
+                if ($data[$field] == $value) {
+                    $conditionsMet++;
+                }
+            }
+
+            if ($conditionsMet == count($fields)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

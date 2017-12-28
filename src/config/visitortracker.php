@@ -20,11 +20,6 @@ return [
     | - browser_family
     | - browser
     | - is_login_attempt
-    | - lat
-    | - long
-    | - country
-    | - country_code
-    | - city
     | - browser_language_family
     | - browser_language
     |
@@ -43,6 +38,28 @@ return [
         // Example 3 (at least one of the fields have to have the specified value):
         // ['method' => 'POST'],
         // ['is_ajax' => true],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Don't record visits with the following geoip values
+    |--------------------------------------------------------------------------
+    |
+    | The available fields are:
+    | - lat
+    | - long
+    | - country
+    | - country_code
+    | - city
+    |
+    */
+
+    'dont_record_geoip' => [
+        // Example:
+        // [
+        //     'country_code' => 'RU',
+        //     'city' => 'Moscow'
+        // ]
     ],
 
     /*
