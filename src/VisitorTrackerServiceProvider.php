@@ -13,11 +13,11 @@ class VisitorTrackerServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(Tracker::class, function () {
-            return new Tracker();
+        $this->app->singleton(VisitStats::class, function () {
+            return new VisitStats();
         });
 
-        $this->app->alias(Tracker::class, 'laravel-visitor-tracker');
+        $this->app->alias(VisitStats::class, 'laravel-visitor-tracker');
 
         if ($this->app->config->get('visitortracker') === null) {
             $this->app->config->set('visitortracker', require __DIR__ . '/config/visitortracker.php');

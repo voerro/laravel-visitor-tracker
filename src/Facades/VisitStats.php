@@ -4,7 +4,7 @@ namespace Voerro\Laravel\VisitorTracker\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class Tracker extends Facade
+class VisitStats extends Facade
 {
     protected static function getFacadeAccessor()
     {

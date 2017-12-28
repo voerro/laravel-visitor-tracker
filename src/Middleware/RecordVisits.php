@@ -3,7 +3,7 @@
 namespace Voerro\Laravel\VisitorTracker\Middleware;
 
 use Closure;
-use Voerro\Laravel\VisitorTracker\Facades\Tracker;
+use Voerro\Laravel\VisitorTracker\Tracker;
 
 class RecordVisits
 {

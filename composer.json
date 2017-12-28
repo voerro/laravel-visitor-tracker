@@ -42,7 +42,7 @@
                 "Voerro\\Laravel\\VisitorTracker\\VisitorTrackerServiceProvider"
             ],
             "aliases": {
-                "VisitorTracker": "Voerro\\Laravel\\VisitorTracker\\Facades\\Tracker"
+                "VisitStats": "Voerro\\Laravel\\VisitorTracker\\Facades\\VisitStats"
             }
         }
     }
