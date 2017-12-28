@@ -4,7 +4,7 @@ namespace Voerro\Laravel\VisitorTracker\Test;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Voerro\Laravel\VisitorTracker\Tracker;
-use Voerro\Laravel\VisitorTracker\Model\Visit;
+use Voerro\Laravel\VisitorTracker\Models\Visit;
 
 class VisitorTrackerTest extends TestCase
 {

@@ -18,7 +18,6 @@
         "illuminate/bus": "5.5.*",
         "illuminate/queue": "5.5.*",
         "illuminate/contracts": "5.5.*",
-        "illuminate/foundation": "5.5.*",
         "piwik/device-detector": "^3.9",
         "guzzlehttp/guzzle": "~6.0"
     },

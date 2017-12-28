@@ -4,7 +4,7 @@ namespace Voerro\Laravel\VisitorTracker;
 
 use DeviceDetector\DeviceDetector;
 use DeviceDetector\Parser\OperatingSystem;
-use Voerro\Laravel\VisitorTracker\Model\Visit;
+use Voerro\Laravel\VisitorTracker\Models\Visit;
 use Voerro\Laravel\VisitorTracker\Jobs\GetGeoipData;
 
 class Tracker

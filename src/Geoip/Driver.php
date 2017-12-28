@@ -2,7 +2,7 @@
 
 namespace Voerro\Laravel\VisitorTracker\Geoip;
 
-use Voerro\Laravel\VisitorTracker\Model\Visit;
+use Voerro\Laravel\VisitorTracker\Models\Visit;
 use GuzzleHttp\Client;
 
 abstract class Driver
