@@ -32,6 +32,7 @@ class VisitorTrackerServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
+        $this->loadViewsFrom(__DIR__ . '/views', 'visitstats');
 
         $this->publishes([
             __DIR__ . '/config/visitortracker.php' => config_path('visitortracker.php'),
