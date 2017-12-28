@@ -41,11 +41,11 @@ class GetGeoipData implements ShouldQueue
             if ($geoip->driver) {
                 if ($geoip = $geoip->driver->getDataFor($this->visit)) {
                     $data = [
-                        'lat' => $geoip->latitude(),
-                        'long' => $geoip->longitude(),
-                        'country' => $geoip->country(),
-                        'country_code' => $geoip->countryCode(),
-                        'city' => $geoip->city(),
+                        'lat' => $geoip->latitude() ?: null,
+                        'long' => $geoip->longitude() ?: null,
+                        'country' => $geoip->country() ?: null,
+                        'country_code' => $geoip->countryCode() ?: null,
+                        'city' => $geoip->city() ?: null,
                     ];
 
                     if ($this->shouldRecordVisit($data)) {
