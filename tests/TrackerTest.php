@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Voerro\Laravel\VisitorTracker\Tracker;
 use Voerro\Laravel\VisitorTracker\Models\Visit;
 
-class VisitorTrackerTest extends TestCase
+class TrackerTest extends TestCase
 {
     use RefreshDatabase;
 
