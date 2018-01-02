@@ -1,6 +1,6 @@
 # Laravel Visitor Tracker and Statistics
 
-[![Packagist](https://img.shields.io/packagist/v/voerro/laravel-visitor-tracker.svg?style=flat-square)](https://packagist.org/packages/voerro/laravel-visitor-tracker)[![Packagist](https://img.shields.io/packagist/dt/voerro/laravel-visitor-tracker.svg?style=flat-square)](https://packagist.org/packages/voerro/laravel-visitor-tracker) [![Packagist](https://img.shields.io/packagist/l/voerro/laravel-visitor-tracker.svg?style=flat-square)](https://opensource.org/licenses/MIT)
+[![Packagist](https://img.shields.io/packagist/v/voerro/laravel-visitor-tracker.svg?style=flat-square)](https://packagist.org/packages/voerro/laravel-visitor-tracker) [![Packagist](https://img.shields.io/packagist/dt/voerro/laravel-visitor-tracker.svg?style=flat-square)](https://packagist.org/packages/voerro/laravel-visitor-tracker) [![Packagist](https://img.shields.io/packagist/l/voerro/laravel-visitor-tracker.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
 Track your authenticated and unauthenticated visitors, login attempts, ajax requests, and more. Includes a controller and a bunch of routes and views to display the statistics, as well as a helper class to fetch the statistics easily (in case you want to display the statistics yourself).
 
