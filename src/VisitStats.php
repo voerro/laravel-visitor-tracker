@@ -75,6 +75,7 @@ class VisitStats
         Route::get('/stats/countries', '\Voerro\Laravel\VisitorTracker\Controllers\StatisticsController@countries')->name('visitortracker.countries');
         Route::get('/stats/os', '\Voerro\Laravel\VisitorTracker\Controllers\StatisticsController@os')->name('visitortracker.os');
         Route::get('/stats/browsers', '\Voerro\Laravel\VisitorTracker\Controllers\StatisticsController@browsers')->name('visitortracker.browsers');
+        Route::get('/stats/languages', '\Voerro\Laravel\VisitorTracker\Controllers\StatisticsController@languages')->name('visitortracker.languages');
     }
 
     public static function query()

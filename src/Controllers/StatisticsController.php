@@ -140,4 +140,9 @@ class StatisticsController
     {
         return $this->groupedVisits('browsers', 'browser_family', 'Browsers');
     }
+
+    public function languages()
+    {
+        return $this->groupedVisits('languages', 'browser_language_family', 'Languages');
+    }
 }
