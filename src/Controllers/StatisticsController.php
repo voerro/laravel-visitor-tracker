@@ -85,4 +85,17 @@ class StatisticsController
             'visitortrackerSubtitle' => 'Ajax Requests',
         ], $this->viewSettings()));
     }
+
+    public function bots()
+    {
+        return view('visitstats::visits', array_merge([
+            'visits' => VisitStats::query()
+                ->visits()
+                ->withUsers()
+                ->latest()
+                ->bots()
+                ->paginate(config('visitortracker.results_per_page', 15)),
+            'visitortrackerSubtitle' => 'Ajax Requests',
+        ], $this->viewSettings()));
+    }
 }

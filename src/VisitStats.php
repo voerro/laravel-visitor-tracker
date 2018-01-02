@@ -61,6 +61,7 @@ class VisitStats
         Route::get('/stats/all', '\Voerro\Laravel\VisitorTracker\Controllers\StatisticsController@allRequests')->name('visitortracker.all_requests');
         Route::get('/stats/visits', '\Voerro\Laravel\VisitorTracker\Controllers\StatisticsController@visits')->name('visitortracker.visits');
         Route::get('/stats/ajax', '\Voerro\Laravel\VisitorTracker\Controllers\StatisticsController@ajaxRequests')->name('visitortracker.ajax_requests');
+        Route::get('/stats/bots', '\Voerro\Laravel\VisitorTracker\Controllers\StatisticsController@bots')->name('visitortracker.bots');
     }
 
     public static function query()
