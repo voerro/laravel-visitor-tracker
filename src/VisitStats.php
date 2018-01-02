@@ -269,7 +269,7 @@ class VisitStats
      * @param Carbon\Carbon $to
      * @return $this
      */
-    public function period(Carbon $from, Carbon $to)
+    public function period(Carbon $from = null, Carbon $to = null)
     {
         if ($from) {
             $this->where('created_at', '>=', $from);

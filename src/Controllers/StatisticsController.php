@@ -19,10 +19,10 @@ class StatisticsController
 
     public function summary()
     {
-        $visits24h = VisitStats::query()->visits()->where('created_at', '>=', Carbon::now()->subHours(24));
-        $visits1w = VisitStats::query()->visits()->where('created_at', '>=', Carbon::now()->subDays(7));
-        $visits1m = VisitStats::query()->visits()->where('created_at', '>=', Carbon::now()->subMonth(1));
-        $visits1y = VisitStats::query()->visits()->where('created_at', '>=', Carbon::now()->subYears(1));
+        $visits24h = VisitStats::query()->visits()->period(Carbon::now()->subHours(24));
+        $visits1w = VisitStats::query()->visits()->period(Carbon::now()->subDays(7));
+        $visits1m = VisitStats::query()->visits()->period(Carbon::now()->subMonth(1));
+        $visits1y = VisitStats::query()->visits()->period(Carbon::now()->subYears(1));
 
         return view('visitstats::summary', array_merge([
             'lastVisits' => VisitStats::query()
