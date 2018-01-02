@@ -212,7 +212,7 @@ class StatsTest extends TestCase
         $results = VisitStats::query()->visits()->unique()->get();
 
         $this->assertCount(1, $results);
-        $this->assertEquals(50, $results[0]->count);
+        $this->assertEquals(50, $results[0]->visits_count);
     }
 
     public function testGetUniqueVisitorsCount()
