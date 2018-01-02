@@ -25,71 +25,7 @@
                 </td>
 
                 <td>
-                    @if ($visit->user_id)
-                        <img class="visitortracker-icon"
-                            src="{{ asset('/vendor/visitortracker/icons/user.png') }}"
-                            title="Authenticated user: {{ $visit->user_email }}">
-                    @endif
-
-                    {{ $visit->ip }}
-
-                    <br>
-
-                    @if ($visit->os_family)
-                        <img class="visitortracker-icon"
-                            src="{{ asset('/vendor/visitortracker/icons/os/'.$visit->os_family.'.png') }}"
-                            title="{{ $visit->os }}"
-                            alt="{{ $visit->os }}">
-                    @else
-                        <span>{{ $visit->os }}</span>
-                    @endif
-
-                    @if ($visit->browser_family)
-                        <img class="visitortracker-icon"
-                            src="{{ asset('/vendor/visitortracker/icons/browsers/'.$visit->browser_family.'.png') }}"
-                            title="{{ $visit->browser }}"
-                            alt="{{ $visit->browser }}">
-                    @else
-                        <span>{{ $visit->browser }}</span>
-                    @endif
-
-                    @if ($visit->is_mobile)
-                        <img class="visitortracker-icon"
-                            src="{{ asset('/vendor/visitortracker/icons/mobile.png') }}"
-                            title="Mobile device">
-                    @endif
-
-                    @if ($visit->is_bot)
-                        <img class="visitortracker-icon"
-                            src="{{ asset('/vendor/visitortracker/icons/spider.png') }}"
-                            title="{{ $visit->bot ?: 'Bot' }}">
-                    @endif
-
-                    {{ $visit->browser_language ?: '-' }}
-
-                    <br>
-
-                    @if ($visit->country_code)
-                        @if (file_exists('vendor/visitortracker/icons/flags/'.$visit->country_code.'.png'))
-                            <img class="visitortracker-icon"
-                                src="{{ asset('/vendor/visitortracker/icons/flags/'.$visit->country_code.'.png') }}"
-                                title="{{ $visit->country }}">
-                        @else
-                            <img class="visitortracker-icon"
-                                src="{{ asset('/vendor/visitortracker/icons/flags/unknown.png') }}"
-                                title="Unknown">
-                        @endif
-                    @endif
-
-                    {{ $visit->city ?: '' }}{{ $visit->lat && $visit->long ? ',' : '' }}
-
-                    @if ($visit->lat && $visit->long)
-                        {{ $visit->lat }}, {{ $visit->long }}
-                    @endif
-                </td>
-
-                <td>
-                    
+                    @include('visitstats::_visitor')
                 </td>
             </tr>
         @endforeach

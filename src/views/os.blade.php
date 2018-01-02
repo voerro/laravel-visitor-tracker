@@ -10,6 +10,7 @@
 				<th>OS</th>
 				<th>Unique Visitors</th>
 				<th>Visits</th>
+				<th>Last Visit</th>
 			</thead>
 
 			<tbody>
@@ -34,6 +35,10 @@
 
 						<td>
 							{{ $visit->visits_count }}
+						</td>
+
+						<td>
+							@include('visitstats::_last_visit')
 						</td>
 					</tr>
 				@endforeach

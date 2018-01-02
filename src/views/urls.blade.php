@@ -29,7 +29,7 @@
 						</td>
 
 						<td>
-							{{ \Carbon\Carbon::parse($visit->created_at)->format($datetimeFormat) }}
+							@include('visitstats::_last_visit')
 						</td>
 					</tr>
 				@endforeach

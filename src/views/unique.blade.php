@@ -32,7 +32,9 @@
 						</td>
 
                         <td>
-							{{ \Carbon\Carbon::parse($visit->created_at)->format($datetimeFormat) }}
+							@include('visitstats::_last_visit', [
+                                'hideUserAndIp' => true,
+                            ])
 						</td>
 					</tr>
 				@endforeach
