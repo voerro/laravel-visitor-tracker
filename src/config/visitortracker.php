@@ -81,7 +81,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Recording login attempts
+    | Tracking login attempts
     |--------------------------------------------------------------------------
     |
     | Describe what a login attempt would look like
