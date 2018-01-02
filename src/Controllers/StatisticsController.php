@@ -151,6 +151,11 @@ class StatisticsController
         return $this->groupedVisits('unique', 'ip', 'Unique Visitors');
     }
 
+    public function users()
+    {
+        return $this->groupedVisits('users', 'user_id', 'Registered Users');
+    }
+
     public function urls()
     {
         return $this->groupedVisits('urls', 'url', 'URLs');

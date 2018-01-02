@@ -77,6 +77,7 @@ class VisitStats
         Route::get('/stats/browsers', '\Voerro\Laravel\VisitorTracker\Controllers\StatisticsController@browsers')->name('visitortracker.browsers');
         Route::get('/stats/languages', '\Voerro\Laravel\VisitorTracker\Controllers\StatisticsController@languages')->name('visitortracker.languages');
         Route::get('/stats/unique', '\Voerro\Laravel\VisitorTracker\Controllers\StatisticsController@unique')->name('visitortracker.unique');
+        Route::get('/stats/users', '\Voerro\Laravel\VisitorTracker\Controllers\StatisticsController@users')->name('visitortracker.users');
         Route::get('/stats/urls', '\Voerro\Laravel\VisitorTracker\Controllers\StatisticsController@urls')->name('visitortracker.urls');
     }
 
