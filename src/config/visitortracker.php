@@ -108,5 +108,33 @@ return [
 
     'geoip_on' => true,
 
-    'geoip_driver' => 'freegeoip.net'
+    'geoip_driver' => 'freegeoip.net',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Users
+    |--------------------------------------------------------------------------
+    |
+    | What table the users are stored in?
+    |
+    */
+
+    'users_table' => 'users',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Views
+    |--------------------------------------------------------------------------
+    |
+    | What layout should the views extend from?
+    | What is the name of the main content section?
+    | What the preferred format for the date and time?
+    |
+    */
+
+    'layout' => 'layouts.dashboard',
+
+    'section_content' => 'content',
+
+    'datetime_format' => 'd M Y, H:i:s',
 ];

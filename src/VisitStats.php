@@ -15,7 +15,7 @@ class VisitStats
      *
      * @var string
      */
-    protected $sqlSelect;
+    protected $sqlSelect = '';
 
     /**
      * Array of WHERE clauses
@@ -32,11 +32,18 @@ class VisitStats
     protected $orderBy = [];
 
     /**
+     * The LIMIT/OFFSET part of the SQL query
+     *
+     * @var string
+     */
+    protected $sqlLimitOffset = '';
+
+    /**
      * The rest of the SQL query
      *
      * @var string
      */
-    protected $sql;
+    protected $sql = '';
 
     /**
      * A field to group the results by
@@ -47,7 +54,7 @@ class VisitStats
 
     public static function routes()
     {
-        Route::get('/statistics', '\Voerro\Laravel\VisitorTracker\Controllers\StatisticsController@test');
+        Route::get('/stats', '\Voerro\Laravel\VisitorTracker\Controllers\StatisticsController@summary')->name('visitortracker.summary');
     }
 
     public static function query()
@@ -150,7 +157,8 @@ class VisitStats
         return $this->sqlSelect
             . $this->sql
             . $this->sqlOrderBy()
-            . $this->sqlWhere();
+            . $this->sqlWhere()
+            . $this->sqlLimitOffset;
     }
 
     public function count()
@@ -185,7 +193,7 @@ class VisitStats
         $page = Paginator::resolveCurrentPage();
         $offset = ($page * $perPage) - $perPage;
 
-        $this->sql .= " LIMIT {$perPage} OFFSET {$offset}";
+        $this->sqlLimitOffset = " LIMIT {$perPage} OFFSET {$offset}";
 
         $results = $this->get();
 
@@ -208,6 +216,25 @@ class VisitStats
         $this->sql = ' FROM visitortracker_visits v';
 
         return $this;
+    }
+
+    public function withUsers()
+    {
+        if ($table = config('visitortracker.users_table')) {
+            $this->sqlSelect .= ', users.email AS user_email';
+
+            $this->sql .= "
+                LEFT JOIN {$table} users
+                ON users.id = v.user_id
+            ";
+        }
+
+        return $this;
+    }
+
+    public function latest()
+    {
+        return $this->orderBy('id', 'DESC');
     }
 
     public function loginAttempts()

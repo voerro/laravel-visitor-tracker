@@ -37,5 +37,9 @@ class VisitorTrackerServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/config/visitortracker.php' => config_path('visitortracker.php'),
         ]);
+
+        $this->publishes([
+            __DIR__ . '/../assets' => public_path('vendor/visitortracker'),
+        ], 'public');
     }
 }

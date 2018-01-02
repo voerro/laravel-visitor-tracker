@@ -94,19 +94,30 @@ class Tracker
             $bot = $dd->getBot();
         }
 
-        $os = $dd->getOs('version')
-            ? $dd->getOs('name') . ' ' . $dd->getOs('version')
-            : $dd->getOs('name');
-
+        // Browser
         $browser = $dd->getClient('version')
             ? $dd->getClient('name') . ' ' . $dd->getClient('version')
             : $dd->getClient('name');
+
+        $browserFamily = str_replace(' ', '-', strtolower($dd->getClient('name')));
 
         // Browser language
         preg_match_all('/([a-z]{2})-[A-Z]{2}/', request()->server('HTTP_ACCEPT_LANGUAGE'), $matches);
 
         $lang = count($matches) && count($matches[0]) ? $matches[0][0] : '';
         $langFamily = count($matches) && count($matches[1]) ? $matches[1][0] : '';
+
+        // OS
+        $os = $dd->getOs('version')
+            ? $dd->getOs('name') . ' ' . $dd->getOs('version')
+            : $dd->getOs('name');
+
+        $osFamily = str_replace(
+            ' ',
+            '-',
+            strtolower(OperatingSystem::getOsFamily($dd->getOs('short_name')))
+        );
+        $osFamily = $osFamily == 'gnu/linux' ? 'linux' : $osFamily;
 
         return [
             'user_id' => auth()->check() ? auth()->id() : null,
@@ -120,8 +131,8 @@ class Tracker
             'is_bot' => $dd->isBot(),
             'bot' => $bot ? $bot['name'] : null,
             'os' => $os,
-            'os_family' => OperatingSystem::getOsFamily($dd->getOs('short_name')),
-            'browser_family' => $dd->getClient('name'),
+            'os_family' => $osFamily,
+            'browser_family' => $browserFamily,
             'browser' => $browser,
 
             'browser_language_family' => $langFamily,
