@@ -20,7 +20,8 @@
 								@if (file_exists('vendor/visitortracker/icons/flags/'.$visit->country_code.'.png'))
 									<img class="visitortracker-icon"
 										src="{{ asset('/vendor/visitortracker/icons/flags/'.$visit->country_code.'.png') }}"
-										title="{{ $visit->country }}">
+										title="{{ $visit->country }}"
+										alt="{{ $visit->country_code }}">
 								@else
 									<img class="visitortracker-icon"
 										src="{{ asset('/vendor/visitortracker/icons/flags/unknown.png') }}"

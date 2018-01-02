@@ -7,7 +7,7 @@
 
 		<table class="table table-sm table-striped fs-1">
 			<thead>
-				<th>OS</th>
+				<th>Browser</th>
 				<th>Unique Visitors</th>
 				<th>Visits</th>
 			</thead>
@@ -16,13 +16,13 @@
 				@foreach ($visits as $visit)
 					<tr>
 						<td>
-							@if ($visit->os_family)
+							@if ($visit->browser_family)
                                 <img class="visitortracker-icon"
-                                    src="{{ asset('/vendor/visitortracker/icons/os/'.$visit->os_family.'.png') }}"
-                                    title="{{ ucwords(str_replace('-', ' ', $visit->os_family)) }}"
-                                    alt="{{ ucwords(str_replace('-', ' ', $visit->os_family)) }}">
+                                    src="{{ asset('/vendor/visitortracker/icons/browsers/'.$visit->browser_family.'.png') }}"
+                                    title="{{ ucwords(str_replace('-', ' ', $visit->browser_family)) }}"
+                                    alt="{{ ucwords(str_replace('-', ' ', $visit->browser_family)) }}">
 
-								{{ ucwords(str_replace('-', ' ', $visit->os_family)) }}
+                                    {{ ucwords(str_replace('-', ' ', $visit->browser_family)) }}
                             @else
                                 <span>Unknown</span>
                             @endif

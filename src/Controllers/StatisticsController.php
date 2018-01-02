@@ -135,4 +135,9 @@ class StatisticsController
     {
         return $this->groupedVisits('os', 'os_family', 'Operating Systems');
     }
+
+    public function browsers()
+    {
+        return $this->groupedVisits('browsers', 'browser_family', 'Browsers');
+    }
 }
