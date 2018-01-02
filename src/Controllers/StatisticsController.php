@@ -112,17 +112,27 @@ class StatisticsController
         ], $this->viewSettings()));
     }
 
-    public function countries()
+    protected function groupedVisits($view, $groupBy, $subtitle)
     {
-        return view('visitstats::countries', array_merge([
+        return view("visitstats::{$view}", array_merge([
             'visits' => VisitStats::query()
                 ->visits()
                 ->withUsers()
                 ->latest()
-                ->groupBy('country_code')
+                ->groupBy($groupBy)
                 ->except(['ajax', 'bots', 'login_attempts'])
                 ->paginate(config('visitortracker.results_per_page', 15)),
-            'visitortrackerSubtitle' => 'Countries',
+            'visitortrackerSubtitle' => $subtitle,
         ], $this->viewSettings()));
+    }
+
+    public function countries()
+    {
+        return $this->groupedVisits('countries', 'country_code', 'Countries');
+    }
+
+    public function os()
+    {
+        return $this->groupedVisits('os', 'os_family', 'Operating Systems');
     }
 }

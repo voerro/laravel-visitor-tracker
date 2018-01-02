@@ -73,6 +73,7 @@ class VisitStats
 
         // Grouped visits
         Route::get('/stats/countries', '\Voerro\Laravel\VisitorTracker\Controllers\StatisticsController@countries')->name('visitortracker.countries');
+        Route::get('/stats/os', '\Voerro\Laravel\VisitorTracker\Controllers\StatisticsController@os')->name('visitortracker.os');
     }
 
     public static function query()
