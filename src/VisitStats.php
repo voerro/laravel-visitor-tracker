@@ -55,6 +55,8 @@ class VisitStats
     public static function routes()
     {
         Route::get('/stats', '\Voerro\Laravel\VisitorTracker\Controllers\StatisticsController@summary')->name('visitortracker.summary');
+        Route::get('/stats/all', '\Voerro\Laravel\VisitorTracker\Controllers\StatisticsController@allRequests')->name('visitortracker.all_requests');
+        Route::get('/stats/visits', '\Voerro\Laravel\VisitorTracker\Controllers\StatisticsController@visits')->name('visitortracker.visits');
     }
 
     public static function query()
@@ -156,8 +158,8 @@ class VisitStats
     {
         return $this->sqlSelect
             . $this->sql
-            . $this->sqlOrderBy()
             . $this->sqlWhere()
+            . $this->sqlOrderBy()
             . $this->sqlLimitOffset;
     }
 

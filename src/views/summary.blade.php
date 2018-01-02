@@ -1,12 +1,6 @@
-@extends($visitortrackerLayout)
+@extends('visitstats::layout')
 
-@section($visitortrackerSectionContent)
-<link rel="stylesheet"
-    property="stylesheet"
-    href="/vendor/visitortracker/css/visitortracker.css">
-
-<h1>Statistics</h1>
-
+@section('visitortracker_content')
 <div class="row">
 	<div class="col-md-12">
 		<h5>Summary</h5>
@@ -67,7 +61,7 @@
 	<div class="col-md-12">
 		<h5>Last 10 Requests</h5>
 
-		@include('visitstats::_table_requests')
+		@include('visitstats::_table_requests', ['visits' => $lastVisits])
 	</div>
 </div>
 @endsection

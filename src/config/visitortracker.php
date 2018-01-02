@@ -127,8 +127,9 @@ return [
     |--------------------------------------------------------------------------
     |
     | What layout should the views extend from?
-    | What is the name of the main content section?
-    | What the preferred format for the date and time?
+    | What is the name of the main content section inside that layout?
+    | What is the preferred format for the date and time?
+    | How many results per page should be displayed?
     |
     */
 
@@ -137,4 +138,6 @@ return [
     'section_content' => 'content',
 
     'datetime_format' => 'd M Y, H:i:s',
+
+    'results_per_page' => 15,
 ];

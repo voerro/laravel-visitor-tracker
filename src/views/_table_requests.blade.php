@@ -5,7 +5,7 @@
     </thead>
 
     <tbody>
-        @foreach ($lastVisits as $visit)
+        @foreach ($visits as $visit)
             <tr>
                 <td>
                     {{ \Carbon\Carbon::parse($visit->created_at)->format($datetimeFormat) }}
@@ -62,7 +62,7 @@
                     @if ($visit->is_bot)
                         <img class="visitortracker-icon"
                             src="{{ asset('/vendor/visitortracker/icons/spider.png') }}"
-                            title="{{ $visit->bot }}">
+                            title="{{ $visit->bot ?: 'Bot' }}">
                     @endif
 
                     {{ $visit->browser_language ?: '-' }}

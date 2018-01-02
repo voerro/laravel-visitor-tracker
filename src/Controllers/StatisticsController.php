@@ -47,4 +47,27 @@ class StatisticsController
             'uniqueTotal' => VisitStats::query()->visits()->unique()->count(),
         ], $this->viewSettings()));
     }
+
+    public function allRequests()
+    {
+        return view('visitstats::visits', array_merge([
+            'visits' => VisitStats::query()
+                ->visits()
+                ->withUsers()
+                ->latest()
+                ->paginate(config('visitortracker.results_per_page', 15)),
+        ], $this->viewSettings()));
+    }
+
+    public function visits()
+    {
+        return view('visitstats::visits', array_merge([
+            'visits' => VisitStats::query()
+                ->visits()
+                ->withUsers()
+                ->latest()
+                ->except(['ajax', 'bots', 'login_attempts'])
+                ->paginate(config('visitortracker.results_per_page', 15)),
+        ], $this->viewSettings()));
+    }
 }
