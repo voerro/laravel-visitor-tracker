@@ -128,6 +128,7 @@ class Tracker
 
             'user_agent' => $agent,
             'is_mobile' => $dd->isMobile(),
+            'is_desktop' => $dd->isDesktop(),
             'is_bot' => $dd->isBot(),
             'bot' => $bot ? $bot['name'] : null,
             'os' => $os,

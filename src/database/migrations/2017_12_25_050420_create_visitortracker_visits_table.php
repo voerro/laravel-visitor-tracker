@@ -22,6 +22,7 @@ class CreateVisitorTrackerVisitsTable extends Migration
             $table->string('url')->nullable();
 
             $table->string('user_agent')->nullable();
+            $table->boolean('is_desktop')->default(false);
             $table->boolean('is_mobile')->default(false);
             $table->boolean('is_bot')->default(false);
             $table->string('bot')->nullable();

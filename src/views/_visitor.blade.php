@@ -28,6 +28,12 @@
     <span>{{ $visit->browser }}</span>
 @endif
 
+@if ($visit->is_desktop)
+    <img class="visitortracker-icon"
+        src="{{ asset('/vendor/visitortracker/icons/desktop.png') }}"
+        title="Desktop">
+@endif
+
 @if ($visit->is_mobile)
     <img class="visitortracker-icon"
         src="{{ asset('/vendor/visitortracker/icons/mobile.png') }}"
