@@ -145,4 +145,9 @@ class StatisticsController
     {
         return $this->groupedVisits('languages', 'browser_language_family', 'Languages');
     }
+
+    public function unique()
+    {
+        return $this->groupedVisits('unique', 'ip', 'Unique Visitors');
+    }
 }
