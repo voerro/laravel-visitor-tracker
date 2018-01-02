@@ -89,6 +89,8 @@ php artisan queue:work
 
 Read more on Queues and Jobs in the [Laravel documentation](https://laravel.com/docs/5.5/queues). [This section](https://laravel.com/docs/5.5/queues#supervisor-configuration) describes how to restart the queue worker automatically in case the process fails.
 
+P.S. You need to restart the worker every time you've made changes to the package's config file.
+
 ## Configuration
 
 Check out the `config/visitortracker.php` file. It is well commented and additional explanations are not required. You can exclude certain users and requests from being tracked there among other things.
