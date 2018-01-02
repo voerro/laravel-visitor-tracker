@@ -193,8 +193,10 @@ class StatsTest extends TestCase
         $results = VisitStats::query()->visits()->groupBy('country_code')->get();
 
         $this->assertCount(4, $results);
-        $this->assertEquals(6, $results[0]->count);
-        $this->assertEquals(5, $results[1]->count);
+        $this->assertEquals(6, $results[0]->visits_count);
+        $this->assertEquals(5, $results[1]->visits_count);
+        $this->assertEquals(1, $results[0]->visitors_count);
+        $this->assertEquals(1, $results[1]->visitors_count);
     }
 
     public function testGroupVisitsAndGetCountOfGroups()

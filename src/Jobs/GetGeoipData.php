@@ -43,9 +43,9 @@ class GetGeoipData implements ShouldQueue
                     $data = [
                         'lat' => $geoip->latitude() ?: null,
                         'long' => $geoip->longitude() ?: null,
-                        'country' => $geoip->country() ?: null,
-                        'country_code' => $geoip->countryCode() ?: null,
-                        'city' => $geoip->city() ?: null,
+                        'country' => $geoip->country() ?: '',
+                        'country_code' => $geoip->countryCode() ?: '',
+                        'city' => $geoip->city() ?: '',
                     ];
 
                     if ($this->shouldRecordVisit($data)) {

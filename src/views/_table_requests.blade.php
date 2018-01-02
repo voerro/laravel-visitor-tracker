@@ -77,7 +77,7 @@
                         @else
                             <img class="visitortracker-icon"
                                 src="{{ asset('/vendor/visitortracker/icons/flags/unknown.png') }}"
-                                title="{{ $visit->bot }}">
+                                title="Unknown">
                         @endif
                     @endif
 

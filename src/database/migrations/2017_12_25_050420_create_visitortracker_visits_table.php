@@ -25,21 +25,21 @@ class CreateVisitorTrackerVisitsTable extends Migration
             $table->boolean('is_mobile')->default(false);
             $table->boolean('is_bot')->default(false);
             $table->string('bot')->nullable();
-            $table->string('os_family')->nullable();
-            $table->string('os')->nullable();
-            $table->string('browser_family')->nullable();
-            $table->string('browser')->nullable();
+            $table->string('os_family')->default('');
+            $table->string('os')->default('');
+            $table->string('browser_family')->default('');
+            $table->string('browser')->default('');
 
             $table->boolean('is_login_attempt')->default(false);
 
-            $table->string('country')->nullable();
-            $table->string('country_code')->nullable();
-            $table->string('city')->nullable();
+            $table->string('country')->default('');
+            $table->string('country_code')->default('');
+            $table->string('city')->default('');
             $table->double('lat')->nullable();
             $table->double('long')->nullable();
 
-            $table->string('browser_language_family', 4)->nullable();
-            $table->string('browser_language', 7)->nullable();
+            $table->string('browser_language_family', 4)->default('');
+            $table->string('browser_language', 7)->default('');
             $table->timestamps();
         });
     }

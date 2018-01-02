@@ -95,7 +95,34 @@ class StatisticsController
                 ->latest()
                 ->bots()
                 ->paginate(config('visitortracker.results_per_page', 15)),
-            'visitortrackerSubtitle' => 'Ajax Requests',
+            'visitortrackerSubtitle' => 'Bots / Crawlers',
+        ], $this->viewSettings()));
+    }
+
+    public function loginAttempts()
+    {
+        return view('visitstats::visits', array_merge([
+            'visits' => VisitStats::query()
+                ->visits()
+                ->withUsers()
+                ->latest()
+                ->loginAttempts()
+                ->paginate(config('visitortracker.results_per_page', 15)),
+            'visitortrackerSubtitle' => 'Login Attempts',
+        ], $this->viewSettings()));
+    }
+
+    public function countries()
+    {
+        return view('visitstats::countries', array_merge([
+            'visits' => VisitStats::query()
+                ->visits()
+                ->withUsers()
+                ->latest()
+                ->groupBy('country_code')
+                ->except(['ajax', 'bots', 'login_attempts'])
+                ->paginate(config('visitortracker.results_per_page', 15)),
+            'visitortrackerSubtitle' => 'Countries',
         ], $this->viewSettings()));
     }
 }

@@ -18,6 +18,13 @@ class VisitStats
     protected $sqlSelect = '';
 
     /**
+     * The GROUP BY part of the SQL query
+     *
+     * @var string
+     */
+    protected $sqlGroupBy = '';
+
+    /**
      * Array of WHERE clauses
      *
      * @var array
@@ -62,6 +69,10 @@ class VisitStats
         Route::get('/stats/visits', '\Voerro\Laravel\VisitorTracker\Controllers\StatisticsController@visits')->name('visitortracker.visits');
         Route::get('/stats/ajax', '\Voerro\Laravel\VisitorTracker\Controllers\StatisticsController@ajaxRequests')->name('visitortracker.ajax_requests');
         Route::get('/stats/bots', '\Voerro\Laravel\VisitorTracker\Controllers\StatisticsController@bots')->name('visitortracker.bots');
+        Route::get('/stats/login-attempts', '\Voerro\Laravel\VisitorTracker\Controllers\StatisticsController@loginAttempts')->name('visitortracker.login_attempts');
+
+        // Grouped visits
+        Route::get('/stats/countries', '\Voerro\Laravel\VisitorTracker\Controllers\StatisticsController@countries')->name('visitortracker.countries');
     }
 
     public static function query()
@@ -79,15 +90,15 @@ class VisitStats
     public function except($fields)
     {
         if (in_array('login_attempts', $fields)) {
-            $this->where('is_login_attempt', '!=', true);
+            $this->where('v.is_login_attempt', '!=', true);
         }
 
         if (in_array('bots', $fields)) {
-            $this->where('is_bot', '!=', true);
+            $this->where('v.is_bot', '!=', true);
         }
 
         if (in_array('ajax', $fields)) {
-            $this->where('is_ajax', '!=', true);
+            $this->where('v.is_ajax', '!=', true);
         }
 
         return $this;
@@ -104,19 +115,24 @@ class VisitStats
     {
         $this->groupBy = $field;
 
-        $this->sqlSelect .= ', v2.count';
+        $this->sqlSelect .= ', v2.visits_count, v2.visitors_count';
 
         $this->sql .= "
             JOIN 
                 (
-                    SELECT {$field}, MAX(created_at) AS max_created_at, COUNT(*) AS count
+                    SELECT 
+                        {$field},
+                        MAX(created_at) AS max_created_at,
+                        COUNT(*) AS visits_count,
+                        COUNT(DISTINCT ip) AS visitors_count
                     FROM visitortracker_visits
                     GROUP BY {$field}
                 ) v2
                 ON v2.{$field} = v.{$field}
                 AND v2.max_created_at = v.created_at
-            GROUP BY v2.{$field}
         ";
+
+        $this->sqlGroupBy = " GROUP BY v2.{$field}";
 
         return $this;
     }
@@ -164,6 +180,7 @@ class VisitStats
         return $this->sqlSelect
             . $this->sql
             . $this->sqlWhere()
+            . $this->sqlGroupBy
             . $this->sqlOrderBy()
             . $this->sqlLimitOffset;
     }
@@ -173,6 +190,7 @@ class VisitStats
         if ($this->groupBy) {
             $this->visits();
             $this->sqlSelect = "SELECT COUNT(DISTINCT {$this->groupBy}) AS total";
+            $this->sqlGroupBy = '';
         } else {
             $this->sqlSelect = 'SELECT COUNT(*) AS total';
         }
