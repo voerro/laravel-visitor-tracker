@@ -54,9 +54,13 @@ class VisitStats
 
     public static function routes()
     {
+        // Summary
         Route::get('/stats', '\Voerro\Laravel\VisitorTracker\Controllers\StatisticsController@summary')->name('visitortracker.summary');
+
+        // Visits
         Route::get('/stats/all', '\Voerro\Laravel\VisitorTracker\Controllers\StatisticsController@allRequests')->name('visitortracker.all_requests');
         Route::get('/stats/visits', '\Voerro\Laravel\VisitorTracker\Controllers\StatisticsController@visits')->name('visitortracker.visits');
+        Route::get('/stats/ajax', '\Voerro\Laravel\VisitorTracker\Controllers\StatisticsController@ajaxRequests')->name('visitortracker.ajax_requests');
     }
 
     public static function query()
@@ -190,7 +194,9 @@ class VisitStats
 
     public function paginate($perPage)
     {
-        $totalCount = self::query()->visits()->count();
+        $countable = clone $this;
+
+        $totalCount = $countable->count();
 
         $page = Paginator::resolveCurrentPage();
         $offset = ($page * $perPage) - $perPage;
@@ -236,7 +242,7 @@ class VisitStats
 
     public function latest()
     {
-        return $this->orderBy('id', 'DESC');
+        return $this->orderBy('v.id', 'DESC');
     }
 
     public function loginAttempts()

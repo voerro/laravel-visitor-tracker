@@ -3,7 +3,7 @@
 @section('visitortracker_content')
 <div class="row">
 	<div class="col-md-12">
-		<h5>Page Visits</h5>
+		<h5>{{ $visitortrackerSubtitle }}</h5>
 
 		@include('visitstats::_table_requests')
 

@@ -56,6 +56,7 @@ class StatisticsController
                 ->withUsers()
                 ->latest()
                 ->paginate(config('visitortracker.results_per_page', 15)),
+            'visitortrackerSubtitle' => 'All Requests',
         ], $this->viewSettings()));
     }
 
@@ -68,6 +69,20 @@ class StatisticsController
                 ->latest()
                 ->except(['ajax', 'bots', 'login_attempts'])
                 ->paginate(config('visitortracker.results_per_page', 15)),
+            'visitortrackerSubtitle' => 'Page Visits',
+        ], $this->viewSettings()));
+    }
+
+    public function ajaxRequests()
+    {
+        return view('visitstats::visits', array_merge([
+            'visits' => VisitStats::query()
+                ->visits()
+                ->withUsers()
+                ->latest()
+                ->ajax()
+                ->paginate(config('visitortracker.results_per_page', 15)),
+            'visitortrackerSubtitle' => 'Ajax Requests',
         ], $this->viewSettings()));
     }
 }
