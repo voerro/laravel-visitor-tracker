@@ -25,7 +25,13 @@
                     <a href="{{ $visit->url }}" target="_blank">{{ $visit->url }}</a>
                 </td>
 
-                <td>{{ $visit->referer ?: '-' }}</td>
+                <td>
+                    {!!
+                        $visit->referer
+                        ? '<a href="' . $visit->referer . '" target="_blank">' . $visit->referer . '</a>'
+                        : '-'
+                    !!}
+                </td>
 
                 <td>@include('visitstats::_visitor')</td>
             </tr>
