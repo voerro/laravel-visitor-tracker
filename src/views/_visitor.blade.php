@@ -5,25 +5,39 @@
             title="Authenticated user: {{ $visit->user_email }}">
     @endif
 
+    @if ($visit->is_bot)
+        <img class="visitortracker-icon"
+            src="{{ asset('/vendor/visitortracker/icons/spider.png') }}"
+            title="{{ $visit->bot ?: 'Bot' }}">
+    @endif
+
     {{ $visit->ip }}
 
     <br>
 @endif
 
 @if ($visit->os_family)
-    <img class="visitortracker-icon"
-        src="{{ asset('/vendor/visitortracker/icons/os/'.$visit->os_family.'.png') }}"
-        title="{{ $visit->os }}"
-        alt="{{ $visit->os }}">
+    @if (file_exists('vendor/visitortracker/icons/os/'.$visit->os_family.'.png'))
+        <img class="visitortracker-icon"
+            src="{{ asset('/vendor/visitortracker/icons/os/'.$visit->os_family.'.png') }}"
+            title="{{ $visit->os }}"
+            alt="{{ $visit->os }}">
+    @else
+        <span>{{ $visit->os }}</span>
+    @endif
 @else
     <span>{{ $visit->os }}</span>
 @endif
 
 @if ($visit->browser_family)
-    <img class="visitortracker-icon"
-        src="{{ asset('/vendor/visitortracker/icons/browsers/'.$visit->browser_family.'.png') }}"
-        title="{{ $visit->browser }}"
-        alt="{{ $visit->browser }}">
+    @if (file_exists('vendor/visitortracker/icons/browsers/'.$visit->browser_family.'.png'))
+        <img class="visitortracker-icon"
+            src="{{ asset('/vendor/visitortracker/icons/browsers/'.$visit->browser_family.'.png') }}"
+            title="{{ $visit->browser }}"
+            alt="{{ $visit->browser }}">
+    @else
+        <span>{{ $visit->browser }}</span>
+    @endif
 @else
     <span>{{ $visit->browser }}</span>
 @endif
@@ -38,12 +52,6 @@
     <img class="visitortracker-icon"
         src="{{ asset('/vendor/visitortracker/icons/mobile.png') }}"
         title="Mobile device">
-@endif
-
-@if ($visit->is_bot)
-    <img class="visitortracker-icon"
-        src="{{ asset('/vendor/visitortracker/icons/spider.png') }}"
-        title="{{ $visit->bot ?: 'Bot' }}">
 @endif
 
 {{ $visit->browser_language ?: '' }}
