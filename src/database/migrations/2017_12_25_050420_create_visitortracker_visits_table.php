@@ -20,6 +20,7 @@ class CreateVisitorTrackerVisitsTable extends Migration
             $table->string('method')->nullable();
             $table->boolean('is_ajax')->default(false);
             $table->string('url')->nullable();
+            $table->string('referer')->nullable();
 
             $table->string('user_agent')->nullable();
             $table->boolean('is_desktop')->default(false);

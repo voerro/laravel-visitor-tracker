@@ -124,6 +124,7 @@ class Tracker
             'ip' => request()->ip(),
             'method' => request()->method(),
             'url' => request()->fullUrl(),
+            'referer' => request()->headers->get('referer'),
             'is_ajax' => request()->ajax(),
 
             'user_agent' => $agent,

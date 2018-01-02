@@ -1,6 +1,7 @@
 <table class="table table-sm table-striped fs-1">
     <thead>
         <th>Request</th>
+        <th>Referrer</th>
         <th>Visitor</th>
     </thead>
 
@@ -24,9 +25,9 @@
                     <a href="{{ $visit->url }}" target="_blank">{{ $visit->url }}</a>
                 </td>
 
-                <td>
-                    @include('visitstats::_visitor')
-                </td>
+                <td>{{ $visit->referer ?: '-' }}</td>
+
+                <td>@include('visitstats::_visitor')</td>
             </tr>
         @endforeach
     </tbody>
