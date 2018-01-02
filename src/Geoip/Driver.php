@@ -7,8 +7,19 @@ use GuzzleHttp\Client;
 
 abstract class Driver
 {
+    /**
+     * Holds data fetched from a remote geoapi service
+     *
+     * @var [type]
+     */
     protected $data;
 
+    /**
+     * Fetch data from a remote geoapi service
+     *
+     * @param Voerro\Laravel\VisitorTracker\Models\Visit $visit
+     * @return $this
+     */
     public function getDataFor(Visit $visit)
     {
         $client = new Client();
@@ -24,15 +35,46 @@ abstract class Driver
         return null;
     }
 
+    /**
+     * Returns an endpoint to fetch the data from
+     *
+     * @param string $ip IP address to fetch geolocation data for
+     * @return string
+     */
     abstract protected function getEndpoint($ip);
 
+    /**
+     * Returns latitude from the fetched data
+     *
+     * @return string
+     */
     abstract public function latitude();
 
+    /**
+     * Returns longitude from the fetched data
+     *
+     * @return string
+     */
     abstract public function longitude();
 
+    /**
+     * Returns country from the fetched data
+     *
+     * @return string
+     */
     abstract public function country();
 
+    /**
+     * Returns country code from the fetched data
+     *
+     * @return string
+     */
     abstract public function countryCode();
 
+    /**
+     * Returns city from the fetched data
+     *
+     * @return string
+     */
     abstract public function city();
 }

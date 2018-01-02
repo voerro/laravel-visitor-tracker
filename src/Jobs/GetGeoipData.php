@@ -29,7 +29,9 @@ class GetGeoipData implements ShouldQueue
     }
 
     /**
-     * Execute the job.
+     * Execute the job. Fetches geolocation data from the preferred driver for
+     * a specific visit. Records the data to the database if the received
+     * values are not excluded from being tracked in the config file.
      *
      * @return void
      */

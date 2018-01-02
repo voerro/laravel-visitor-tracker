@@ -9,6 +9,11 @@ class Geoip
 {
     public $driver;
 
+    /**
+     * Creates an instance of a geoapi driver.
+     *
+     * @param string $driver
+     */
     public function __construct($driver)
     {
         switch ($driver) {

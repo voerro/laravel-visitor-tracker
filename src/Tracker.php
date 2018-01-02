@@ -9,6 +9,12 @@ use Voerro\Laravel\VisitorTracker\Jobs\GetGeoipData;
 
 class Tracker
 {
+    /**
+     * Records a visit/request based on the request()
+     *
+     * @param string $agent
+     * @return Voerro\Laravel\VisitorTracker\Models\Visit
+     */
     public static function recordVisit($agent = null)
     {
         if (!self::shouldTrackAuthenticatedUser()) {
@@ -84,6 +90,12 @@ class Tracker
         return true;
     }
 
+    /**
+     * Collect and form into array data about the current visit based on the request() and UA
+     *
+     * @param string $agent User agent
+     * @return array
+     */
     protected static function getVisitData($agent)
     {
         $dd = new DeviceDetector($agent);

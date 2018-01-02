@@ -59,6 +59,11 @@ class VisitStats
      */
     protected $groupBy;
 
+    /**
+     * Adds routes to the statistics pages
+     *
+     * @return void
+     */
     public static function routes()
     {
         // Summary
@@ -81,11 +86,24 @@ class VisitStats
         Route::get('/stats/urls', '\Voerro\Laravel\VisitorTracker\Controllers\StatisticsController@urls')->name('visitortracker.urls');
     }
 
+    /**
+     * Initializes a query builder
+     *
+     * @return self
+     */
     public static function query()
     {
         return new Self;
     }
 
+    /**
+     * Adds an item to the $where array
+     *
+     * @param string $field
+     * @param string $symbol
+     * @param string $value
+     * @return $this
+     */
     public function where($field, $symbol, $value)
     {
         array_push($this->where, [$field, $symbol, $value]);
@@ -93,6 +111,12 @@ class VisitStats
         return $this;
     }
 
+    /**
+     * Exclude rows where certain boolean fields are equal to true
+     *
+     * @param string $fields
+     * @return $this
+     */
     public function except($fields)
     {
         if (in_array('login_attempts', $fields)) {
@@ -110,6 +134,13 @@ class VisitStats
         return $this;
     }
 
+    /**
+     * Adds an item to the $orderBy array
+     *
+     * @param string $field
+     * @param string $direction
+     * @return $this
+     */
     public function orderBy($field, $direction = 'ASC')
     {
         array_push($this->orderBy, [$field, $direction]);
@@ -117,6 +148,13 @@ class VisitStats
         return $this;
     }
 
+    /**
+     * Adds SQL to the query to group the results by a field, fetching the latest row
+     * from each group and counting the number of rows in each group
+     *
+     * @param string $field
+     * @return $this
+     */
     public function groupBy($field)
     {
         $this->groupBy = $field;
@@ -128,14 +166,14 @@ class VisitStats
                 (
                     SELECT 
                         {$field},
-                        MAX(created_at) AS max_created_at,
+                        MAX(id) AS max_id,
                         COUNT(*) AS visits_count,
                         COUNT(DISTINCT ip) AS visitors_count
                     FROM visitortracker_visits
                     GROUP BY {$field}
                 ) v2
                 ON v2.{$field} = v.{$field}
-                AND v2.max_created_at = v.created_at
+                AND v2.max_id = v.id
         ";
 
         $this->sqlGroupBy = " GROUP BY v2.{$field}";
@@ -143,6 +181,11 @@ class VisitStats
         return $this;
     }
 
+    /**
+     * Returns a WHERE SQL clause formed from the $where array
+     *
+     * @return string
+     */
     protected function sqlWhere()
     {
         if (!count($this->where)) {
@@ -162,6 +205,11 @@ class VisitStats
         return $sql;
     }
 
+    /**
+     * Returns an ORDER BY SQL clause formed from the $orderBy array
+     *
+     * @return string
+     */
     protected function sqlOrderBy()
     {
         if (!count($this->orderBy)) {
@@ -181,6 +229,11 @@ class VisitStats
         return $sql;
     }
 
+    /**
+     * Returns the final SQL concatenated from multiple parts
+     *
+     * @return string
+     */
     public function sql()
     {
         return $this->sqlSelect
@@ -191,6 +244,11 @@ class VisitStats
             . $this->sqlLimitOffset;
     }
 
+    /**
+     * Returns the count of rows from the query held in the query builder at the moment
+     *
+     * @return integer
+     */
     public function count()
     {
         if ($this->groupBy) {
@@ -201,9 +259,16 @@ class VisitStats
             $this->sqlSelect = 'SELECT COUNT(*) AS total';
         }
 
-        return $this->get()[0]->total;
+        return intval($this->get()[0]->total);
     }
 
+    /**
+     * Filter results by the 'created_at' field to fetch records between 2 dates
+     *
+     * @param Carbon\Carbon $from
+     * @param Carbon\Carbon $to
+     * @return $this
+     */
     public function period(Carbon $from, Carbon $to)
     {
         if ($from) {
@@ -217,6 +282,12 @@ class VisitStats
         return $this;
     }
 
+    /**
+     * Returns paginated query results using Laravel's LengthAwarePaginator
+     *
+     * @param integer $perPage
+     * @return Illuminate\Pagination\LengthAwarePaginator
+     */
     public function paginate($perPage)
     {
         $countable = clone $this;
@@ -235,6 +306,11 @@ class VisitStats
         ]);
     }
 
+    /**
+     * Executes the query from the query builder and returns the results
+     *
+     * @return array
+     */
     public function get()
     {
         $results = DB::select(DB::raw($this->sql()));
@@ -242,6 +318,11 @@ class VisitStats
         return $results;
     }
 
+    /**
+     * Forms a basic query to fetch all the fields from the visitortracker_visits table
+     *
+     * @return void
+     */
     public function visits()
     {
         $this->sqlSelect = 'SELECT v.*';
@@ -251,6 +332,12 @@ class VisitStats
         return $this;
     }
 
+    /**
+     * Adds a query to the builder to fetch additional data from the users table
+     * along with the visits
+     *
+     * @return $this
+     */
     public function withUsers()
     {
         if ($table = config('visitortracker.users_table')) {
@@ -265,26 +352,51 @@ class VisitStats
         return $this;
     }
 
+    /**
+     * Orders the results by id DESC to get the latest visits first
+     *
+     * @return void
+     */
     public function latest()
     {
         return $this->orderBy('v.id', 'DESC');
     }
 
+    /**
+     * Return only login attempts
+     *
+     * @return $this
+     */
     public function loginAttempts()
     {
         return $this->where('is_login_attempt', '=', true);
     }
 
+    /**
+     * Return only visits from bots/crawlers
+     *
+     * @return $this
+     */
     public function bots()
     {
         return $this->where('is_bot', '=', true);
     }
 
+    /**
+     * Return only ajax requests
+     *
+     * @return $this
+     */
     public function ajax()
     {
         return $this->where('is_ajax', '=', true);
     }
 
+    /**
+     * Return only unique (by ip) visitors
+     *
+     * @return $this
+     */
     public function unique()
     {
         return $this->groupBy('ip');
