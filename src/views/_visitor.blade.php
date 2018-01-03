@@ -70,7 +70,7 @@
     @endif
 @endif
 
-{{ $visit->city ?: '' }}{{ $visit->lat && $visit->long ? ',' : '' }}
+{{ $visit->city ?: '' }}{{ $visit->city && $visit->lat && $visit->long ? ',' : '' }}
 
 @if ($visit->lat && $visit->long)
     {{ $visit->lat }}, {{ $visit->long }}
