@@ -18,12 +18,14 @@
 					<tr>
 						<td>
 							@if ($visit->browser_family)
-                                <img class="visitortracker-icon"
-                                    src="{{ asset('/vendor/visitortracker/icons/browsers/'.$visit->browser_family.'.png') }}"
-                                    title="{{ ucwords(str_replace('-', ' ', $visit->browser_family)) }}"
-                                    alt="{{ ucwords(str_replace('-', ' ', $visit->browser_family)) }}">
+								@if (file_exists(public_path('vendor/visitortracker/icons/browsers/'.$visit->browser_family.'.png')))
+									<img class="visitortracker-icon"
+										src="{{ asset('/vendor/visitortracker/icons/browsers/'.$visit->browser_family.'.png') }}"
+										title="{{ ucwords(str_replace('-', ' ', $visit->browser_family)) }}"
+										alt="{{ ucwords(str_replace('-', ' ', $visit->browser_family)) }}">
+								@endif
 
-                                    {{ ucwords(str_replace('-', ' ', $visit->browser_family)) }}
+                                {{ ucwords(str_replace('-', ' ', $visit->browser_family)) }}
                             @else
                                 <span>Unknown</span>
                             @endif

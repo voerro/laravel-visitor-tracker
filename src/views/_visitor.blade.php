@@ -17,7 +17,7 @@
 @endif
 
 @if ($visit->os_family)
-    @if (file_exists('vendor/visitortracker/icons/os/'.$visit->os_family.'.png'))
+    @if (file_exists(public_path('vendor/visitortracker/icons/os/'.$visit->os_family.'.png')))
         <img class="visitortracker-icon"
             src="{{ asset('/vendor/visitortracker/icons/os/'.$visit->os_family.'.png') }}"
             title="{{ $visit->os }}"
@@ -30,7 +30,7 @@
 @endif
 
 @if ($visit->browser_family)
-    @if (file_exists('vendor/visitortracker/icons/browsers/'.$visit->browser_family.'.png'))
+    @if (file_exists(public_path('vendor/visitortracker/icons/browsers/'.$visit->browser_family.'.png')))
         <img class="visitortracker-icon"
             src="{{ asset('/vendor/visitortracker/icons/browsers/'.$visit->browser_family.'.png') }}"
             title="{{ $visit->browser }}"
@@ -59,7 +59,7 @@
 <br>
 
 @if ($visit->country_code)
-    @if (file_exists('vendor/visitortracker/icons/flags/'.$visit->country_code.'.png'))
+    @if (file_exists(public_path('vendor/visitortracker/icons/flags/'.$visit->country_code.'.png')))
         <img class="visitortracker-icon"
             src="{{ asset('/vendor/visitortracker/icons/flags/'.$visit->country_code.'.png') }}"
             title="{{ $visit->country }}">

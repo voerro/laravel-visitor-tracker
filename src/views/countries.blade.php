@@ -18,7 +18,7 @@
 					<tr>
 						<td>
 							@if ($visit->country_code)
-								@if (file_exists('vendor/visitortracker/icons/flags/'.$visit->country_code.'.png'))
+								@if (file_exists(public_path('vendor/visitortracker/icons/flags/'.$visit->country_code.'.png')))
 									<img class="visitortracker-icon"
 										src="{{ asset('/vendor/visitortracker/icons/flags/'.$visit->country_code.'.png') }}"
 										title="{{ $visit->country }}"

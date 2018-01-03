@@ -18,10 +18,12 @@
 					<tr>
 						<td>
 							@if ($visit->os_family)
-                                <img class="visitortracker-icon"
-                                    src="{{ asset('/vendor/visitortracker/icons/os/'.$visit->os_family.'.png') }}"
-                                    title="{{ ucwords(str_replace('-', ' ', $visit->os_family)) }}"
-                                    alt="{{ ucwords(str_replace('-', ' ', $visit->os_family)) }}">
+								@if (file_exists(public_path('vendor/visitortracker/icons/os/'.$visit->os_family.'.png')))
+									<img class="visitortracker-icon"
+										src="{{ asset('/vendor/visitortracker/icons/os/'.$visit->os_family.'.png') }}"
+										title="{{ ucwords(str_replace('-', ' ', $visit->os_family)) }}"
+										alt="{{ ucwords(str_replace('-', ' ', $visit->os_family)) }}">
+								@endif
 
 								{{ ucwords(str_replace('-', ' ', $visit->os_family)) }}
                             @else
