@@ -138,28 +138,28 @@ This is the data that is being collected by the tracker.
 | Database field | Description |
 | --- | --- |
 | user_id | An id of an authenticated user performing the request |
-| ip | i.e. '127.0.0.1' |
-| method | i.e. 'GET' |
+| ip | e.g. '127.0.0.1' |
+| method | e.g. 'GET' |
 | is_ajax | Whether the request is an AJAX request |
-| url | i.e. 'http://voerro.com' |
-| referer | i.e. 'http://google.com' |
-| user_agent | i.e. 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:58.0) Gecko/20100101 Firefox/58.0' |
+| url | e.g. 'http://voerro.com' |
+| referer | e.g. 'http://google.com' |
+| user_agent | e.g. 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:58.0) Gecko/20100101 Firefox/58.0' |
 | is_desktop | Whether the request is made from a desktop |
 | is_mobile | Whether the request is made from a mobile device |
 | is_bot | Whether the visitor is a bot/crawler |
-| bot | i.e. 'Googlebot' |
-| os_family | i.e. 'linux' |
-| os | i.e. 'Ubuntu' |
-| browser_family | i.e. 'firefox' |
-| browser | i.e. 'Firefox 58.0' |
+| bot | e.g. 'Googlebot' |
+| os_family | e.g. 'linux' |
+| os | e.g. 'Ubuntu' |
+| browser_family | e.g. 'firefox' |
+| browser | e.g. 'Firefox 58.0' |
 | is_login_attempt | Whether the request is a login attempt |
-| country | i.e. 'Russia' |
-| country_code | i.e. 'RU' |
-| city | i.e. 'Moscow' |
+| country | e.g. 'Russia' |
+| country_code | e.g. 'RU' |
+| city | e.g. 'Moscow' |
 | lat | Latitude |
 | long | Longitude |
-| browser_language_family | i.e. 'en' |
-| browser_language | i.e. 'en-US' |
+| browser_language_family | e.g. 'en' |
+| browser_language | e.g. 'en-US' |
 | created_at | A standard Laravel field which is also used as a visit/request datetime |
 
 The package uses `piwik/device-detector` to parse the user agent.
