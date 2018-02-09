@@ -88,4 +88,15 @@ class TrackerTest extends TestCase
         $this->assertEquals('windows', $visit->os_family);
         $this->assertEquals('Windows 8.1', $visit->os);
     }
+
+    public function testUnkUnkBrowserAndOs()
+    {
+        $visit = Tracker::recordVisit('');
+
+        $this->assertEquals('UNK UNK', $visit->os);
+        $this->assertEquals('unk', $visit->os_family);
+
+        $this->assertEquals('UNK UNK', $visit->browser);
+        $this->assertEquals('unk', $visit->browser_family);
+    }
 }

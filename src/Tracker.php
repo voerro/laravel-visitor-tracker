@@ -101,11 +101,6 @@ class Tracker
         $dd = new DeviceDetector($agent);
         $dd->parse();
 
-        $bot = null;
-        if ($dd->isBot()) {
-            $bot = $dd->getBot();
-        }
-
         // Browser
         $browser = $dd->getClient('version')
             ? $dd->getClient('name') . ' ' . $dd->getClient('version')
@@ -130,6 +125,18 @@ class Tracker
             strtolower(OperatingSystem::getOsFamily($dd->getOs('short_name')))
         );
         $osFamily = $osFamily == 'gnu/linux' ? 'linux' : $osFamily;
+
+        // "UNK UNK" browser and OS
+        $browserFamily = ($browser == 'UNK UNK') ? 'unk' : $browserFamily;
+        $osFamily = ($os == 'UNK UNK') ? 'unk' : $osFamily;
+
+        // Whether it's a bot
+        $bot = null;
+        if ($dd->isBot()) {
+            $bot = $dd->getBot();
+        } else {
+            // TODO: additional conditions
+        }
 
         return [
             'user_id' => auth()->check() ? auth()->id() : null,
