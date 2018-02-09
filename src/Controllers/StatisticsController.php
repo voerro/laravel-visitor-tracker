@@ -134,8 +134,8 @@ class StatisticsController
                 ->visits()
                 ->withUsers()
                 ->latest()
-                ->groupBy($groupBy)
                 ->except(['ajax', 'bots', 'login_attempts'])
+                ->groupBy($groupBy)
                 ->paginate(config('visitortracker.results_per_page', 15)),
             'visitortrackerSubtitle' => $subtitle,
         ], $this->viewSettings()));

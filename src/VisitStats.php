@@ -161,6 +161,8 @@ class VisitStats
 
         $this->sqlSelect .= ', v2.visits_count, v2.visitors_count';
 
+        $where = str_replace('v.', '', $this->sqlWhere());
+
         $this->sql .= "
             JOIN 
                 (
@@ -170,6 +172,8 @@ class VisitStats
                         COUNT(*) AS visits_count,
                         COUNT(DISTINCT ip) AS visitors_count
                     FROM visitortracker_visits
+                    
+                    {$where}
                     GROUP BY {$field}
                 ) v2
                 ON v2.{$field} = v.{$field}
