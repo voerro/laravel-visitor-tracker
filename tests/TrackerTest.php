@@ -99,4 +99,21 @@ class TrackerTest extends TestCase
         $this->assertEquals('UNK UNK', $visit->browser);
         $this->assertEquals('unk', $visit->browser_family);
     }
+
+    public function testMarkAppsAndLibrariesAsBots()
+    {
+        $botAgents = [
+            'curl/7.17.1 (mips-unknown-linux-gnu) libcurl/7.17.1 OpenSSL/0.9.8i zlib/1.2.3',
+            'python-requests/2.18.4',
+            'Python-urllib/2.7',
+            'Wget(linux)',
+            '',
+        ];
+
+        foreach ($botAgents as $bot) {
+            $visit = Tracker::recordVisit($bot);
+
+            $this->assertTrue($visit->is_bot);
+        }
+    }
 }

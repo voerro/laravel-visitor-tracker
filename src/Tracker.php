@@ -9,6 +9,14 @@ use Voerro\Laravel\VisitorTracker\Jobs\GetGeoipData;
 
 class Tracker
 {
+    protected static $botBrowsers = [
+        'curl',
+        'python-requests',
+        'python-urllib',
+        'wget',
+        'unk',
+    ];
+
     /**
      * Records a visit/request based on the request()
      *
@@ -132,10 +140,14 @@ class Tracker
 
         // Whether it's a bot
         $bot = null;
-        if ($dd->isBot()) {
+        $isBot = $dd->isBot();
+        if ($isBot) {
             $bot = $dd->getBot();
         } else {
-            // TODO: additional conditions
+            if (in_array($browserFamily, static::$botBrowsers)) {
+                $isBot = true;
+                $bot = ['name' => $browserFamily];
+            }
         }
 
         return [
@@ -149,7 +161,7 @@ class Tracker
             'user_agent' => $agent,
             'is_mobile' => $dd->isMobile(),
             'is_desktop' => $dd->isDesktop(),
-            'is_bot' => $dd->isBot(),
+            'is_bot' => $isBot,
             'bot' => $bot ? $bot['name'] : null,
             'os' => $os,
             'os_family' => $osFamily,
