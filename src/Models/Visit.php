@@ -16,13 +16,4 @@ class Visit extends Model
         'is_bot' => 'boolean',
         'is_mobile' => 'boolean',
     ];
-
-    protected $appends = ['created_at_timezoned'];
-
-    public function getCreatedAtTimezonedAttribute()
-    {
-        return Carbon::parse($this->created_at)
-            ->tz(config('visitortracker.timezone', 'UTC'))
-            ->format(config('visitortracker.datetime_format'))
-    }
 }

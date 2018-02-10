@@ -9,7 +9,9 @@
         @foreach ($visits as $visit)
             <tr>
                 <td>
-                    {{ $visit->created_at_timezoned }}
+                    {{ \Carbon\Carbon::parse($visit->created_at)
+                        ->tz(config('visitortracker.timezone', 'UTC'))
+                        ->format(config('visitortracker.datetime_format')) }}
                     
                     <br>
 
