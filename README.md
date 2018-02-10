@@ -4,6 +4,8 @@
 
 Track your authenticated and unauthenticated visitors, login attempts, ajax requests, and more. Includes a controller and a bunch of routes and views to display the statistics, as well as a helper class to fetch the statistics easily (in case you want to display the statistics yourself).
 
+[Live Demo](http://statistics.voerro.com)
+
 ## Installation - Basic
 1) Install the package using composer:
 
