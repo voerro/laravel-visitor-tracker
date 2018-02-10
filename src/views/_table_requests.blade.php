@@ -9,7 +9,7 @@
         @foreach ($visits as $visit)
             <tr>
                 <td>
-                    {{ \Carbon\Carbon::parse($visit->created_at)->format($datetimeFormat) }}
+                    {{ $visit->created_at_timezoned }}
                     
                     <br>
 

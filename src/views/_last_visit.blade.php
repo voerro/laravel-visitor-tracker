@@ -1,5 +1,5 @@
 @if (!isset($hideLastVisitDatetime))
-    {{ \Carbon\Carbon::parse($visit->created_at)->format($datetimeFormat) }}<br>
+    {{ $visit->created_at_timezoned }}<br>
 @endif
 
 @include('visitstats::_visitor')

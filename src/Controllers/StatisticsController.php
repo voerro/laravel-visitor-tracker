@@ -13,7 +13,6 @@ class StatisticsController
         return [
             'visitortrackerLayout' => config('visitortracker.layout'),
             'visitortrackerSectionContent' => config('visitortracker.section_content'),
-            'datetimeFormat' => config('visitortracker.datetime_format'),
         ];
     }
 
