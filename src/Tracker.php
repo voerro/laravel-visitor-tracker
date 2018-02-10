@@ -15,6 +15,7 @@ class Tracker
         'python-urllib',
         'wget',
         'unk',
+        'perl',
     ];
 
     /**
