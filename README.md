@@ -97,6 +97,10 @@ P.S. You need to restart the worker every time you've made changes to the packag
 
 Check out the `config/visitortracker.php` file. It is well commented and additional explanations are not required. You can exclude certain users and requests from being tracked there among other things.
 
+## Testing
+
+The external API calls to retrieve geolocation information are disabled in the testing environment. Otherwise your tests would run really slow, since the tracker tracks all the requests.
+
 ## Displaying Statistics
 
 The package comes with a controller and a bunch of routes and views to display statistics. You can fetch and display the stats yourself using the `VisitStats` class, but we'll talk about it later. The provided views are uncomplicated and styled with the standard Bootstrap classes.

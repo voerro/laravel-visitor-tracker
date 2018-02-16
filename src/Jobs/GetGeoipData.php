@@ -37,6 +37,10 @@ class GetGeoipData implements ShouldQueue
      */
     public function handle()
     {
+        if (app()->runningUnitTests()) {
+            return;
+        }
+
         if (config('visitortracker.geoip_on')) {
             $geoip = new Geoip(config('visitortracker.geoip_driver'));
 
