@@ -20,23 +20,19 @@ class StatisticsController
     {
         $visits24h = VisitStats::query()->visits()
             ->except(['ajax', 'bots'])
-            ->period(Carbon::now()
-            ->subHours(24));
+            ->period(Carbon::now()->subHours(24));
 
         $visits1w = VisitStats::query()->visits()
             ->except(['ajax', 'bots'])
-            ->period(Carbon::now()
-            ->subDays(7));
+            ->period(Carbon::now()->subDays(7));
 
         $visits1m = VisitStats::query()->visits()
             ->except(['ajax', 'bots'])
-            ->period(Carbon::now()
-            ->subMonth(1));
+            ->period(Carbon::now()->subMonth(1));
 
         $visits1y = VisitStats::query()->visits()
             ->except(['ajax', 'bots'])
-            ->period(Carbon::now()
-            ->subYears(1));
+            ->period(Carbon::now()->subYears(1));
 
         return view('visitstats::summary', array_merge([
             'lastVisits' => VisitStats::query()
@@ -134,6 +130,7 @@ class StatisticsController
                 ->withUsers()
                 ->latest()
                 ->except(['ajax', 'bots', 'login_attempts'])
+                ->orderBy('visitors_count', 'DESC')
                 ->groupBy($groupBy)
                 ->paginate(config('visitortracker.results_per_page', 15)),
             'visitortrackerSubtitle' => $subtitle,

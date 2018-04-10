@@ -16,6 +16,7 @@ class Tracker
         'wget',
         'unk',
         'perl',
+        'go-http-client',
     ];
 
     /**
