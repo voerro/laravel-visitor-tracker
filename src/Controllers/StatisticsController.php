@@ -128,7 +128,6 @@ class StatisticsController
             'visits' => VisitStats::query()
                 ->visits()
                 ->withUsers()
-                ->latest()
                 ->except(['ajax', 'bots', 'login_attempts'])
                 ->orderBy('visitors_count', 'DESC')
                 ->groupBy($groupBy)

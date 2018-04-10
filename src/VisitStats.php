@@ -259,6 +259,7 @@ class VisitStats
             $this->visits();
             $this->sqlSelect = "SELECT COUNT(DISTINCT {$this->groupBy}) AS total";
             $this->sqlGroupBy = '';
+            $this->orderBy = [];
         } else {
             $this->sqlSelect = 'SELECT COUNT(*) AS total';
         }
