@@ -59,7 +59,7 @@ If you want to fetch and display the visitor statistics yourself register the fa
 5) Publish the config file, assets, and views by running:
 
 ```bash
-php artisan vendor:publish--provider=Voerro\Laravel\VisitorTracker\VisitorTrackerServiceProvider
+php artisan vendor:publish
 ```
 
 Choose `Voerro\Laravel\VisitorTracker\VisitorTrackerServiceProvider` in the provided list.
