@@ -1,4 +1,4 @@
-<table class="table table-sm table-striped fs-1">
+<table class="visitortracker-table table table-sm table-striped fs-1">
     <thead>
         <th>Request</th>
         <th>Referrer</th>
@@ -8,7 +8,7 @@
     <tbody>
         @foreach ($visits as $visit)
             <tr>
-                <td>
+                <td class="visitortracker-cell-break-words">
                     {{ \Carbon\Carbon::parse($visit->created_at)
                         ->tz(config('visitortracker.timezone', 'UTC'))
                         ->format(config('visitortracker.datetime_format')) }}
@@ -24,18 +24,23 @@
                     @endif
 
                     {{ $visit->method }} 
-                    <a href="{{ $visit->url }}" target="_blank">{{ $visit->url }}</a>
+
+                    <a href="{{ $visit->url }}"
+                        title="{{ $visit->url }}"
+                        target="_blank">{{ $visit->url }}</a>
                 </td>
 
-                <td>
+                <td class="visitortracker-cell-break-words">
                     {!!
                         $visit->referer
-                        ? '<a href="' . $visit->referer . '" target="_blank">' . $visit->referer . '</a>'
+                        ? '<a href="' . $visit->referer . '" title="' . $visit->referer . '" target="_blank">' . $visit->referer . '</a>'
                         : '-'
                     !!}
                 </td>
 
-                <td>@include('visitstats::_visitor')</td>
+                <td class="visitortracker-cell-nowrap">
+                    @include('visitstats::_visitor')
+                </td>
             </tr>
         @endforeach
     </tbody>

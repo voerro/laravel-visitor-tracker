@@ -5,7 +5,7 @@
 	<div class="col-md-12">
 		<h5>{{ $visitortrackerSubtitle }}</h5>
 
-		<table class="table table-sm table-striped fs-1">
+		<table class="visitortracker-table table table-sm table-striped fs-1">
 			<thead>
 				<th>User</th>
 				<th>Visits</th>
