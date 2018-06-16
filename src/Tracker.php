@@ -27,6 +27,10 @@ class Tracker
      */
     public static function recordVisit($agent = null)
     {
+        if (!self::shouldTrackUser()) {
+            return;
+        }
+
         if (!self::shouldTrackAuthenticatedUser()) {
             return;
         }
@@ -50,6 +54,25 @@ class Tracker
         GetGeoipData::dispatch($visit);
 
         return $visit;
+    }
+
+    /**
+     * Determine if the user should be tracked based on whether they are
+     * authenticated or not
+     *
+     * @return boolean
+     */
+    protected static function shouldTrackUser()
+    {
+        if (config('visitortracker.dont_track_authenticated_users') && auth()->check()) {
+            return false;
+        }
+
+        if (config('visitortracker.dont_track_anonymous_users') && !auth()->check()) {
+            return false;
+        }
+
+        return true;
     }
 
     /**

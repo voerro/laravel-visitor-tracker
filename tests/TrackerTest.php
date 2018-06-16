@@ -5,6 +5,8 @@ namespace Voerro\Laravel\VisitorTracker\Test;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Voerro\Laravel\VisitorTracker\Tracker;
 use Voerro\Laravel\VisitorTracker\Models\Visit;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\User;
 
 class TrackerTest extends TestCase
 {
@@ -115,5 +117,48 @@ class TrackerTest extends TestCase
 
             $this->assertTrue($visit->is_bot);
         }
+    }
+
+    public function testDontTrackAnonymousUsers()
+    {
+        $this->assertFalse(auth()->check());
+
+        config(['visitortracker.dont_track_anonymous_users' => true]);
+
+        // Try tracking an anonymous user
+        $result = Tracker::recordVisit();
+
+        $this->assertCount(0, Visit::all());
+
+        // Then try tracking an authenticated user
+        Auth::login(new User());
+
+        $this->assertTrue(auth()->check());
+
+        $result = Tracker::recordVisit();
+
+        $this->assertCount(1, Visit::all());
+    }
+
+    public function testDontTrackAuthenticatedUsers()
+    {
+        $this->assertFalse(auth()->check());
+
+        config(['visitortracker.dont_track_authenticated_users' => true]);
+
+        // Try tracking an anonymous user
+        $result = Tracker::recordVisit();
+
+        $this->assertCount(1, Visit::all());
+
+        // Then try tracking an authenticated user
+        Auth::login(new User());
+
+        $this->assertTrue(auth()->check());
+
+        $result = Tracker::recordVisit();
+
+        // The number of records shouldn't change
+        $this->assertCount(1, Visit::all());
     }
 }
