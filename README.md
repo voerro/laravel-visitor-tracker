@@ -56,10 +56,10 @@ If you want to fetch and display the visitor statistics yourself register the fa
 ...
 ```
 
-5) Publish the config file and assets by running:
+5) Publish the config file, assets, and views by running:
 
 ```bash
-php artisan vendor:publish
+php artisan vendor:publish--provider=Voerro\Laravel\VisitorTracker\VisitorTrackerServiceProvider
 ```
 
 Choose `Voerro\Laravel\VisitorTracker\VisitorTrackerServiceProvider` in the provided list.
@@ -95,7 +95,7 @@ P.S. You need to restart the worker every time you've made changes to the packag
 
 ## Configuration
 
-Check out the `config/visitortracker.php` file. It is well commented and additional explanations are not required. You can exclude certain users and requests from being tracked there among other things.
+Check out the `config/visitortracker.php` file. It is well commented and additional explanations are not required. You can exclude certain user groups, individual users, and certain requests from being tracked there among other things.
 
 ## Testing
 
