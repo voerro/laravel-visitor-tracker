@@ -66,7 +66,7 @@ Choose `Voerro\Laravel\VisitorTracker\VisitorTrackerServiceProvider` in the prov
 
 ## Installation - Geoapi
 
-The tracker uses external API to fetch the geolocation data. To turn geoapi off set the `geoip_on` setting in the config file to false. To change a provider change the `geoip_driver` field. The supported drivers are listed in the configuration file.
+The tracker uses external API to fetch the geolocation data. To turn geoapi off set the `geoip_on` setting in the config file to false. To change a provider change the `geoip_driver` field. The supported drivers are listed in the configuration file. You might need to fill out additional API keys depending on the driver you choose.
 
 Since fetching data from an external API takes time, the operation is queued an performed asynchronously. This is done using Laravel Jobs and probably won't work on a shared hosting. There are multiple drivers supported. We'll describe how to set up the database driver.
 

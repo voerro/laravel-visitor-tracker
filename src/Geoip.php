@@ -3,7 +3,7 @@
 namespace Voerro\Laravel\VisitorTracker;
 
 use Voerro\Laravel\VisitorTracker\Geoip\Userinfo;
-use Voerro\Laravel\VisitorTracker\Geoip\Freegeoip;
+use Voerro\Laravel\VisitorTracker\Geoip\Ipstack;
 
 class Geoip
 {
@@ -20,8 +20,8 @@ class Geoip
             case 'userinfo.io':
                 $this->driver = new Userinfo();
                 break;
-            case 'freegeoip.net':
-                $this->driver = new Freegeoip();
+            case 'ipstack.com':
+                $this->driver = new Ipstack();
                 break;
             default:
                 $this->driver = null;

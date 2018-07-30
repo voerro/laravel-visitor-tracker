@@ -2,11 +2,13 @@
 
 namespace Voerro\Laravel\VisitorTracker\Geoip;
 
-class Freegeoip extends Driver
+class Ipstack extends Driver
 {
     protected function getEndpoint($ip)
     {
-        return "http://freegeoip.net/json/{$ip}";
+        $key = config('visitortracker.ipstack_key');
+
+        return "http://api.ipstack.com/{$ip}?access_key={$key}";
     }
 
     public function latitude()

@@ -10,7 +10,7 @@ abstract class Driver
     /**
      * Holds data fetched from a remote geoapi service
      *
-     * @var [type]
+     * @var Object
      */
     protected $data;
 

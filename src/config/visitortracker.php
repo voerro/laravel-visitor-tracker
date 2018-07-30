@@ -112,13 +112,15 @@ return [
     | Should the geoip data be collected?
     |
     | Set the geoip driver.
-    | Supported: 'userinfo.io', 'freegeoip.net'
+    | Supported: 'userinfo.io', 'ipstack.com'
     |
     */
 
     'geoip_on' => true,
 
-    'geoip_driver' => 'freegeoip.net',
+    'geoip_driver' => 'ipstack.com',
+
+    'ipstack_key' => '',
 
     /*
     |--------------------------------------------------------------------------
